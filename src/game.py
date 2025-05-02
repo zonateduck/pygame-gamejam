@@ -31,6 +31,13 @@ x, y = 100, 100
 speed = 5
 size = 50
 
+#SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
+world_objects = [
+    #[object, type, position_x, position_y]
+]
+
+world_borders = []  #Updates based on current_state.get_borders()
+transition_threshold = 5    #How many pixels off-screen before transition
 
 #GameState manager
 test_start_screen = TestStartScreen()
@@ -42,13 +49,16 @@ current_state = test_start_screen
 def change_gamestate(new_state):
     #This makes sure the game is not in two states at the same time :)
     global current_state
+    global world_borders
+
     if current_state != new_state:
         if current_state != None:
             current_state.exit()    #UNUSED: We might not want exit/enter methods, depends where we want to keep important gamedata.
         current_state = new_state
         current_state.enter()       #Also unused
 
-    #SUGGESTION: current_state.get_borders() updates some variables for borders here in the main :)
+        #SUGGESTION: update a list of borders here in the main :)
+        world_borders = current_state.get_borders()
 
 #Finds correct area to move to :)
 def find_adjacent_area(current_state, direction): 
@@ -60,7 +70,7 @@ def find_adjacent_area(current_state, direction):
         case "test02" : 
             new_state = test_screen2
         case _: #If areaID did not match
-            print("Warning: Area not found. Create collision?")
+            print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
             new_state = current_state
     return new_state
 
@@ -78,13 +88,17 @@ while running:
     # Get key presses
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        x -= speed
+        if not (x < 0 and "LEFT" in world_borders):
+            x -= speed
     if keys[pygame.K_RIGHT]:
-        x += speed
+        if not (x > (WIDTH - size) and "RIGHT" in world_borders):
+            x += speed
     if keys[pygame.K_UP]:
-        y -= speed
+        if not (y < 0 and "UP" in world_borders):
+            y -= speed
     if keys[pygame.K_DOWN]:
-        y += speed
+        if not (y > (HEIGHT - size) and "DOWN" in world_borders):
+            y += speed
 
     #Draw background
     screen.fill(WHITE)
@@ -110,17 +124,17 @@ while running:
         current_state.run(screen)
 
     #Logic for player going to new area :D
-    if x < 0:
-        current_state = find_adjacent_area(current_state, "LEFT")
+    if x < 0 - transition_threshold:
+        change_gamestate(find_adjacent_area(current_state, "LEFT"))
         x = WIDTH
-    if x > WIDTH:
-        current_state = find_adjacent_area(current_state, "RIGHT")
+    if x > WIDTH + transition_threshold:
+        change_gamestate(find_adjacent_area(current_state, "RIGHT"))
         x = 0
-    if y < 0:
-        current_state = find_adjacent_area(current_state, "UP")
+    if y < - transition_threshold:
+        change_gamestate(find_adjacent_area(current_state, "UP"))
         y = HEIGHT
-    if y > HEIGHT:
-        find_adjacent_area(current_state, "DOWN")
+    if y > HEIGHT + transition_threshold:
+        change_gamestate(find_adjacent_area(current_state, "DOWN"))
         y = 0
         
 

@@ -17,11 +17,14 @@ class TestScreen1:
 
     def get_adjacent_area(self, direction):
         match direction:
-            case "LEFT": return "test02"
+            case "LEFT": return None
             case "RIGHT": return "test02"
             case "UP" : return None
             case "DOWN" : return None
-
+    
+    def get_borders(self):
+        return ["UP", "DOWN", "LEFT"]
+    
     def exit(self):
         #Called when state is exited.
         pass
