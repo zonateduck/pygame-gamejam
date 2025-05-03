@@ -60,6 +60,8 @@ while running:
         background = remove_red_channel(background.copy())
     if keys[pygame.K_DOWN]:
         background = remove_green_channel(background.copy())
+    if keys[pygame.K_s]:
+        background = remove_color(background.copy(), (255, 0, 0), (160, 160, 160))
 
     # Draw
     screen.blit(background, (0, 0))

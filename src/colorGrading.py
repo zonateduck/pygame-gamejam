@@ -30,12 +30,13 @@ def remove_color(image, target_color, replacement_color=(0,0,0), acceptedRange= 
 
     for x in range(image.get_width()):
         for y in range(image.get_height()):
-            if image.get_at((x,y))[:3] == target_color:
+            pixel_color = image.get_at((x,y))[:3]
+            if color_distance(pixel_color, target_color) <= acceptedRange:
                 image.set_at((x,y), replacement_color)
     
     return image
 
-
+# This function removes the red channel (SHOULD NOT BE USED WHEN CHANNEL HAS BEEN X REMOVED MORE THAN ONCE)
 def remove_red_channel(image) -> pygame.Surface:
     image = image.copy()
 
@@ -47,6 +48,7 @@ def remove_red_channel(image) -> pygame.Surface:
 
     return image
 
+# This function removes the green channel (SHOULD NOT BE USED WHEN CHANNEL HAS BEEN X REMOVED MORE THAN ONCE)
 def remove_green_channel(image) -> pygame.Surface:
     image = image.copy()
 
@@ -57,7 +59,7 @@ def remove_green_channel(image) -> pygame.Surface:
             image.set_at((x,y), (r, 0, b, alpha))
     return image
 
-# FOR SOME REASO 
+# This function removes the green channel (SHOULD NOT BE USED WHEN CHANNEL HAS BEEN X REMOVED MORE THAN ONCE)
 def remove_blue_channel(image) -> pygame.Surface:
     image = image.copy()
 
