@@ -8,13 +8,12 @@ class TestScreen1:
         self.box_size = 500
         pass
 
-    def enter(self):
-        #Called when state is entered.
-        pass
 
     def run(self, screen):
         #Continously called in the while running-loop.
         pygame.draw.rect(screen, self.RED, (100, 200, self.box_size, self.box_size))
+        #Draw the background here
+
 
     def get_adjacent_area(self, direction):
         match direction:
@@ -29,6 +28,3 @@ class TestScreen1:
     def get_objects(self):
         return self.objects
     
-    def exit(self):
-        #Called when state is exited.
-        pass

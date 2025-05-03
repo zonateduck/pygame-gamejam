@@ -15,6 +15,8 @@ from Levels.StartScreen import StartScreen
 from Objects.TestObject1 import TestObject1
 from colorGrading import *
 
+from player import Player
+
 
 # Initialize pygame
 pygame.init()
@@ -23,6 +25,7 @@ pygame.init()
 # Set up the window
 WIDTH, HEIGHT = 1920, 1080
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 GAME_BACKGROUND = BACKGROUND
 background = pygame.transform.scale(pygame.image.load(GAME_BACKGROUND).convert(), (WIDTH, HEIGHT))
 
@@ -46,11 +49,14 @@ BLUE = (0, 0, 255)
 x, y = 100, 100
 speed = 5
 size = 50
+
+player = Player(screen, x, y, speed)
+
 obj_range = 15   #How big a range the interaction-area has
 
 
 objects = {
-    "testobject01" : TestObject1()
+    #"testobject01" : TestObject1()
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -68,21 +74,18 @@ test_screen2 = TestScreen2()
 
 current_state = test_start_screen
 
+#This makes sure the game is not in two states at the same time :)
 def change_gamestate(new_state):
-    #This makes sure the game is not in two states at the same time :)
     global current_state
     global world_borders
 
     if current_state != new_state:
-        if current_state != None:
-            current_state.exit()    #UNUSED: We might not want exit/enter methods, depends where we want to keep important gamedata.
-        current_state = new_state
-        current_state.enter()       #Also unused
-
-        #SUGGESTION: update a list of borders here in the main :)
-        world_borders = current_state.get_borders()
-
         world_objects.clear()
+        world_borders.clear()
+        current_state = new_state
+        
+        #Update borders and objects:
+        world_borders = current_state.get_borders()
         for objectID in current_state.get_objects():
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
@@ -104,6 +107,9 @@ def find_adjacent_area(current_state, direction):
 def draw_world_objects():
     pass
 
+
+
+
 # Game loop
 running = True
 while running:
@@ -118,21 +124,31 @@ while running:
     TARGET_COLOR = 		(204,0,0)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
+
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_a]:
         if not (x < 0 and "LEFT" in world_borders):
-            background = convert_to_black_and_white(background.copy())
-    if keys[pygame.K_RIGHT]:
+            #background = convert_to_black_and_white(background.copy())
+            player.x -= speed
+            player.facing = "left"
+    if keys[pygame.K_d]:
         if not (x > (WIDTH - size) and "RIGHT" in world_borders):
-            background = remove_blue_channel(background.copy())
-    if keys[pygame.K_UP]:
+            #background = remove_blue_channel(background.copy())
+            player.x += speed
+            player.facing = "right"
+    if keys[pygame.K_w]:
         if not (y < 0 and "UP" in world_borders):
-            background = remove_red_channel(background.copy())
-    if keys[pygame.K_DOWN]:
-        if not (y > (HEIGHT - size) and "DOWN" in world_borders):
-            background = remove_green_channel(background.copy())
+            #background = remove_red_channel(background.copy())
+            player.y -= speed
+            player.facing = "up"
     if keys[pygame.K_s]:
+        if not (y > (HEIGHT - size) and "DOWN" in world_borders):
+            #background = remove_green_channel(background.copy())
+            player.y += speed
+            player.facing = "down"
+    if keys[pygame.K_1]: #DEBUG BUTTON
         background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
+
 
     #Draw background
     screen.blit(background, (0, 0))
@@ -169,8 +185,12 @@ while running:
         
 
     # Draw "Player"
-    pygame.draw.rect(screen, BLUE, (x, y, size, size))
+    #pygame.draw.rect(screen, BLUE, (x, y, size, size))
     fake_player_interaction_rect = pygame.Rect(x - size/2, y - size/2, size + obj_range, size + obj_range)
+
+    screen.blit(player.image, player.rect)
+    player.update()
+
 
     #Draw world objects
     for obj in world_objects:
@@ -184,7 +204,7 @@ while running:
         else:
             print("Cant interact :3")
 
-
+    #Draw the UI here
 
 
     # Update display

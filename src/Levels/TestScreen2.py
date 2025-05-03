@@ -8,9 +8,6 @@ class TestScreen2:
         self.box_size = 500
         pass
 
-    def enter(self):
-        #Called when state is entered.
-        pass
 
     def run(self, screen):
         #Continously called in the while running-loop.
@@ -28,7 +25,3 @@ class TestScreen2:
     
     def get_objects(self):
         return self.objects
-
-    def exit(self):
-        #Called when state is entered.
-        pass
