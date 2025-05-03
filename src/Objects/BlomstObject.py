@@ -1,10 +1,11 @@
+import pygame
 
-class TestObject1():
+class BlomstObject():
     def __init__(self, ID, x, y):
         super().__init__()
-        self.ID = ID #String, eks. "sol01"
-        self.COLOR = (255, 255, 0)
-        self.size = 120
+        self.ID = ID #String
+        self.COLOR = (0, 255, 0)
+        self.size = 50
         self.x = x
         self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
