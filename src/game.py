@@ -5,9 +5,13 @@ import sys, random, time
 from options import *
 from assets import *
 
+#Importing levels
 from TestScreen1 import TestScreen1
 from TestScreen2 import TestScreen2
 from TestStartScreen import TestStartScreen
+
+#Importing objects
+from TestObject1 import TestObject1
 
 # Initialize pygame
 pygame.init()
@@ -30,6 +34,10 @@ BLUE = (0, 0, 255)
 x, y = 100, 100
 speed = 5
 size = 50
+
+objects = {
+    "testobject01" : TestObject1()
+}
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
 world_objects = [
@@ -60,6 +68,11 @@ def change_gamestate(new_state):
         #SUGGESTION: update a list of borders here in the main :)
         world_borders = current_state.get_borders()
 
+        world_objects.clear()
+        for objectID in current_state.get_objects():
+            if objectID in objects.keys():
+                world_objects.append(objects[objectID])
+
 #Finds correct area to move to :)
 def find_adjacent_area(current_state, direction): 
     areaID = current_state.get_adjacent_area(direction)
@@ -74,6 +87,8 @@ def find_adjacent_area(current_state, direction):
             new_state = current_state
     return new_state
 
+def draw_world_objects():
+    pass
 
 # Game loop
 running = True
@@ -140,6 +155,9 @@ while running:
 
     # Draw "Player"
     pygame.draw.rect(screen, BLUE, (x, y, size, size))
+
+    for obj in world_objects:
+        pygame.draw.rect(screen, obj.COLOR, (obj.pos_x, obj.pos_y, obj.size, obj.size))
 
     # Update display
     pygame.display.flip()

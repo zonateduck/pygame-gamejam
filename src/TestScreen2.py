@@ -3,6 +3,7 @@ import pygame
 class TestScreen2:
     def __init__(self):
         self.areaID = "test02"
+        self.objects = []
         self.GREEN = (60, 255, 60)
         self.box_size = 500
         pass
@@ -24,6 +25,9 @@ class TestScreen2:
     
     def get_borders(self):
         return ["RIGHT", "UP", "DOWN"]
+    
+    def get_objects(self):
+        return self.objects
 
     def exit(self):
         #Called when state is entered.
