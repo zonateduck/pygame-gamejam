@@ -1,4 +1,3 @@
-import pygame
 
 class TestObject1():
     def __init__(self):
