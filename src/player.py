@@ -1,5 +1,12 @@
 import pygame, sys, playerAnimation
+import os
 
+
+
+script_dir = os.path.dirname(__file__)  # the folder this script is in
+asset_path = os.path.join(script_dir, "..", "assets", "garfield.png")
+
+GARFIELD = asset_path
 #TODO: remove
 
 
@@ -12,8 +19,7 @@ class Player(pygame.sprite.Sprite):
 
         #self.game = game
         
-        self.playersprite = "./assets/garfield.png"
-
+        self.playersprite = GARFIELD
 
         #self.groups = self.game.all_sprites
         #pygame.sprite.Sprite.__init__(self, self.groups)
@@ -36,7 +42,7 @@ class Player(pygame.sprite.Sprite):
         #Cuts out the sprite from the first position of the spritesheet
         #self.image = self.game.player_sprite.get_sprite(0,0, self.width, self.height)
         #Placeholder garfield:
-        self.image = pygame.image.load("./assets/garfield.png")
+        self.image = pygame.image.load(GARFIELD)
 
 
         #Sets hitbox to a rectangle x,y
