@@ -13,13 +13,19 @@ from Levels.StartScreen import StartScreen
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
+from colorGrading import *
 
 # Initialize pygame
 pygame.init()
 
+
 # Set up the window
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1920, 1080
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+GAME_BACKGROUND = BACKGROUND
+background = pygame.transform.scale(pygame.image.load(GAME_BACKGROUND).convert(), (WIDTH, HEIGHT))
+
+
 # TODO: make up a name for our game
 pygame.display.set_caption("Our game name")
 
@@ -30,6 +36,10 @@ FRAMERATE = 60
 # Colors
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
+
+    
+
+
 
 # Game variables
 x, y = 100, 100
@@ -103,23 +113,28 @@ while running:
         if event.type == pygame.QUIT:
             running = False
  
+
+    TARGET_COLOR = 		(204,0,0)
+    REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         if not (x < 0 and "LEFT" in world_borders):
-            x -= speed
+            background = convert_to_black_and_white(background.copy())
     if keys[pygame.K_RIGHT]:
         if not (x > (WIDTH - size) and "RIGHT" in world_borders):
-            x += speed
+            background = remove_blue_channel(background.copy())
     if keys[pygame.K_UP]:
         if not (y < 0 and "UP" in world_borders):
-            y -= speed
+            background = remove_red_channel(background.copy())
     if keys[pygame.K_DOWN]:
         if not (y > (HEIGHT - size) and "DOWN" in world_borders):
-            y += speed
+            background = remove_green_channel(background.copy())
+    if keys[pygame.K_s]:
+        background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
     #Draw background
-    screen.fill(WHITE)
+    screen.blit(background, (0, 0))
 
     #Run the correct gamestate
     #TODO replace test-screens with actual levels / screens
