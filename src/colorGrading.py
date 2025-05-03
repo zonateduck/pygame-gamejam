@@ -1,4 +1,3 @@
-
 import pygame
 
 # This class controls the color grading
