@@ -15,4 +15,3 @@ Group members:
 
 ## Description of the game
 
-test 
