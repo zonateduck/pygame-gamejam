@@ -193,6 +193,7 @@ while running:
 
 
     #   DRAW WORLD OBJECTS 
+    #Draw world objects
     for obj in world_objects:
         pygame.draw.rect(screen, obj.COLOR, (obj.x, obj.y, obj.size, obj.size))
     
@@ -206,6 +207,7 @@ while running:
 
     #   DRAW DIALOGUE BOXES:
     
+    #Draw the UI here
 
 
     # Update display
