@@ -5,13 +5,14 @@ import sys, random, time
 from options import *
 from assets import *
 
+
 #Importing levels
-from TestScreen1 import TestScreen1
-from TestScreen2 import TestScreen2
+from Levels.TestScreen1 import TestScreen1
+from Levels.TestScreen2 import TestScreen2
 from TestStartScreen import TestStartScreen
 
 #Importing objects
-from TestObject1 import TestObject1
+from Objects.TestObject1 import TestObject1
 
 # Initialize pygame
 pygame.init()
