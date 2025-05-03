@@ -3,7 +3,7 @@ import pygame
 class TestScreen1:
     def __init__(self):
         self.areaID = "test01"
-        self.objects = ["testobject01"] #Which objects exist in this area?
+        self.objects = ["testobject01", "blomst01", "blomst02"] #Which objects exist in this area?
         self.RED = (255, 60, 60)
         self.box_size = 500
         pass

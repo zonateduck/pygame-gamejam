@@ -1,13 +1,13 @@
 import pygame
 
 class TestObject1():
-    def __init__(self):
+    def __init__(self, ID, x, y):
         super().__init__()
-        self.ID = "testobject01"
+        self.ID = ID #string
         self.COLOR = (255, 255, 0)
         self.size = 120
-        self.x = 50
-        self.y = 50
+        self.x = x
+        self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         

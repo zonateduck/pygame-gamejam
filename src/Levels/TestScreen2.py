@@ -3,7 +3,7 @@ import pygame
 class TestScreen2:
     def __init__(self):
         self.areaID = "test02"
-        self.objects = []
+        self.objects = ["blomst03", "blomst04", "blomst05"]
         self.GREEN = (60, 255, 60)
         self.box_size = 500
         pass

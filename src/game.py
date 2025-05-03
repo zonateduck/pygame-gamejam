@@ -13,6 +13,7 @@ from Levels.StartScreen import StartScreen
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
+from Objects.BlomstObject import BlomstObject
 from colorGrading import *
 
 from player import Player
@@ -56,7 +57,13 @@ obj_range = 15   #How big a range the interaction-area has
 
 
 objects = {
-    #"testobject01" : TestObject1()
+    # "objectID" : Objekt("mittobjekt1", x, y)
+    "testobject01" : TestObject1("testobject01", 200, 300),
+    "blomst01" : BlomstObject("blomst01", 300, 400),
+    "blomst02" : BlomstObject("blomst02", 600, 600),
+    "blomst03" : BlomstObject("blomst03", 30, 500),
+    "blomst04" : BlomstObject("blomst04", 300, 800),
+    "blomst05" : BlomstObject("blomst05", 400, 60)
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -170,18 +177,18 @@ while running:
         current_state.run(screen)
 
     #Logic for player going to new area :D
-    if x < 0 - transition_threshold:
+    if player.x < 0 - transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "LEFT"))
-        x = WIDTH
-    if x > WIDTH + transition_threshold:
+        player.x = WIDTH
+    if player.x > WIDTH + transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "RIGHT"))
-        x = 0
-    if y < - transition_threshold:
+        player.x = 0
+    if player.y < - transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "UP"))
-        y = HEIGHT
-    if y > HEIGHT + transition_threshold:
+        player.y = HEIGHT
+    if player.y > HEIGHT + transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "DOWN"))
-        y = 0
+        player.y = 0
         
 
     # Draw "Player"
@@ -196,12 +203,14 @@ while running:
     #Draw world objects
     for obj in world_objects:
         pygame.draw.rect(screen, obj.COLOR, (obj.x, obj.y, obj.size, obj.size))
+        #TODO: screen.blit(obj.image, obj.rect) to load the image
     
     for obj in world_objects:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect):
             print("Can interact!")
-            #if player presses space:
-                # Code to handle interactin
+            #TODO: Show text: "Space to talk" (some sort of UI element)
+            #TODO: if player presses space:
+                # Code to handle interaction
         else:
             print("Cant interact :3")
 
