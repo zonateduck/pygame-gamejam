@@ -15,6 +15,7 @@ from Levels.StartScreen import StartScreen
 from Objects.TestObject1 import TestObject1
 from colorGrading import *
 
+
 # Initialize pygame
 pygame.init()
 

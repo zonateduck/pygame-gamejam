@@ -1,1 +1,1 @@
-BACKGROUND = "pygame-gamejam\\assets\\colorgradingtest.png"
+BACKGROUND = "pygame-gamejam/src/assets/colorgradingtest.png"
