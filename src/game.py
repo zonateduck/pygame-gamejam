@@ -48,7 +48,7 @@ while running:
             running = False
 
 
-    TARGET_COLOR = (37, 150, 190)
+    TARGET_COLOR = 		(204,0,0)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
     keys = pygame.key.get_pressed()
@@ -61,7 +61,7 @@ while running:
     if keys[pygame.K_DOWN]:
         background = remove_green_channel(background.copy())
     if keys[pygame.K_s]:
-        background = remove_color(background.copy(), (255, 0, 0), (160, 160, 160))
+        background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
     # Draw
     screen.blit(background, (0, 0))
