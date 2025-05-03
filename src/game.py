@@ -9,7 +9,7 @@ from assets import *
 #Importing levels
 from Levels.TestScreen1 import TestScreen1
 from Levels.TestScreen2 import TestScreen2
-from TestStartScreen import TestStartScreen
+from Levels.StartScreen import StartScreen
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
@@ -35,6 +35,8 @@ BLUE = (0, 0, 255)
 x, y = 100, 100
 speed = 5
 size = 50
+obj_range = 15   #How big a range the interaction-area has
+
 
 objects = {
     "testobject01" : TestObject1()
@@ -49,7 +51,7 @@ world_borders = []  #Updates based on current_state.get_borders()
 transition_threshold = 5    #How many pixels off-screen before transition
 
 #GameState manager
-test_start_screen = TestStartScreen()
+test_start_screen = StartScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
 
@@ -125,14 +127,10 @@ while running:
         #This doesnt have to be a while loop, but prevents game from moving on :)
         test_start_screen.run(screen)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print("pressed space")
                     change_gamestate(test_screen1)
-        pygame.display.flip()
 
     if current_state == test_screen1:
         current_state.run(screen) #This makes the current_scene display and do its stuff!
@@ -156,9 +154,22 @@ while running:
 
     # Draw "Player"
     pygame.draw.rect(screen, BLUE, (x, y, size, size))
+    fake_player_interaction_rect = pygame.Rect(x - size/2, y - size/2, size + obj_range, size + obj_range)
 
+    #Draw world objects
     for obj in world_objects:
-        pygame.draw.rect(screen, obj.COLOR, (obj.pos_x, obj.pos_y, obj.size, obj.size))
+        pygame.draw.rect(screen, obj.COLOR, (obj.x, obj.y, obj.size, obj.size))
+    
+    for obj in world_objects:
+        if fake_player_interaction_rect.colliderect(obj.interaction_rect):
+            print("Can interact!")
+            #if player presses space:
+                # Code to handle interactin
+        else:
+            print("Cant interact :3")
+
+
+
 
     # Update display
     pygame.display.flip()

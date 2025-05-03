@@ -1,7 +1,8 @@
 import pygame
+import sys
 pygame.font.init()
 
-class TestStartScreen:
+class StartScreen:
     def __init__(self):
         self.LIGHT_BLUE = (200, 200, 255)
         self.box_size = 500
@@ -18,6 +19,12 @@ class TestStartScreen:
         pygame.draw.rect(screen, self.LIGHT_BLUE, (0, 0, width, height))
         screen.blit(self.text_headline, (200, 200))
         screen.blit(self.text_space, (200, 300))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        pygame.display.flip()
 
     def exit(self):
         pass
