@@ -17,6 +17,14 @@ class TestObject1():
     
 
     def interact(self):
+
+        #if flags["finished_collecting"]:
+            #return "play_dialogue", dialogue
+
+        return "go_to_area", "areaID"
+
+
+
         pass
 
     def update_flags(self):

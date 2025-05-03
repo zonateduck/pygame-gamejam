@@ -20,6 +20,7 @@ class BlomstObject():
     def interact(self):
         pass
 
+
     def update_flags(self):
         pass
 

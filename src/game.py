@@ -97,10 +97,8 @@ def change_gamestate(new_state):
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
 
-#Finds correct area to move to :)
-def find_adjacent_area(current_state, direction): 
-    areaID = current_state.get_adjacent_area(direction)
 
+def find_area(areaID):
     match areaID:
         case "test01" : 
             new_state = test_screen1
@@ -110,6 +108,12 @@ def find_adjacent_area(current_state, direction):
             print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
             new_state = current_state
     return new_state
+
+#Finds correct area to move to :)
+def find_adjacent_area(current_state, direction): 
+    areaID = current_state.get_adjacent_area(direction)
+    return find_area(areaID)
+
 
 def draw_world_objects():
     pass
@@ -217,7 +221,6 @@ while running:
     #   DRAW DIALOGUE BOXES:
     
     #Draw the UI here
-
 
     # Update display
     pygame.display.flip()
