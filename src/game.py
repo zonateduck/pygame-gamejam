@@ -4,13 +4,19 @@ import sys, random, time
 
 from options import *
 from assets import *
+from colorGrading import *
 
 # Initialize pygame
 pygame.init()
 
+
 # Set up the window
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1920, 1080
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+GAME_BACKGROUND = BACKGROUND
+background = pygame.transform.scale(pygame.image.load(GAME_BACKGROUND).convert(), (WIDTH, HEIGHT))
+
+
 # TODO: make up a name for our game
 pygame.display.set_caption("Our game name")
 
@@ -21,6 +27,10 @@ FRAMERATE = 60
 # Colors
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
+
+    
+
+
 
 # Game variables
 x, y = 100, 100
@@ -37,19 +47,22 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+
+    TARGET_COLOR = (37, 150, 190)
+    REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        x -= speed
+        background = convert_to_black_and_white(background.copy())
     if keys[pygame.K_RIGHT]:
-        x += speed
+        background = remove_blue_channel(background.copy())
     if keys[pygame.K_UP]:
-        y -= speed
+        background = remove_red_channel(background.copy())
     if keys[pygame.K_DOWN]:
-        y += speed
+        background = remove_green_channel(background.copy())
 
     # Draw
-    screen.fill(WHITE)
+    screen.blit(background, (0, 0))
     pygame.draw.rect(screen, BLUE, (x, y, size, size))
 
     # Update display
