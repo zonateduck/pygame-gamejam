@@ -12,6 +12,7 @@ class AppleObject(pygame.sprite.Sprite):
         self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
+        self.hasBeenCollected = False
         
 
         self.image = pygame.image.load(SPRITE)
@@ -26,12 +27,13 @@ class AppleObject(pygame.sprite.Sprite):
         flags = {}  #Dictionary for various flags
         self.canInteract = True
 
-    def interact(self):
+    def interact(self, world_objects):
 
         #if flags["finished_collecting"]:
             #return "play_dialogue", dialogue
-
-        return "go_to_area", "areaID"
+        world_objects.remove(self)
+        print("Removed")
+        return world_objects
 
 
 
