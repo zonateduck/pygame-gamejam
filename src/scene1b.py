@@ -25,10 +25,14 @@ class Scene1b:
             "Wow, thanks!",
             "I couldn't have done it without you!",
             "This was not how the game was supposed to end, but hey, that's how game jams are sometimes!",
+            "But we got so far!",
+            "Many beautiful systems in place here. Everyone worked super hard!",
             "Thanks a lot for playing the game to the end :)",
         ]
 
         self.speakers = [
+            "Granny",
+            "Granny",
             "Granny",
             "Granny",
             "Granny",
@@ -39,7 +43,7 @@ class Scene1b:
         self.screen = screen  # Keep track of the screen passed from main
 
         # Portrait size and position logic
-        self.PORTRAIT_WIDTH = 120
+        self.PORTRAIT_WIDTH = 160
         self.PORTRAIT_HEIGHT = 160
 
         # Load portraits

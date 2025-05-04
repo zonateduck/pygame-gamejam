@@ -10,6 +10,7 @@ from assets import *
 from Levels.TestScreen1 import TestScreen1
 from Levels.TestScreen2 import TestScreen2
 from Levels.StartScreen import StartScreen
+from Levels.EndScreen import EndScreen
 
 from Levels.AreaA1 import AreaA1
 from Levels.AreaA6 import AreaA6
@@ -103,7 +104,7 @@ obj_range = 15   #How big a range the interaction-area has
 
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
-    "apple01" : AppleObject("Apple01", 300, 40),
+    "apple01" : AppleObject("apple01", 300, 40),
     "house" : HouseObject("house", 800, 150),
     "grandma" : Grandma("grandma", 810, 330),
     "cat" : CatObject("cat", 1000, 100),
@@ -137,6 +138,7 @@ transition_threshold = 5    #How many pixels off-screen before transition
 #Instantiate EVERYTHING
 #Instantiate EVERYTHING
 test_start_screen = StartScreen()
+test_end_screen = EndScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
 
@@ -160,6 +162,7 @@ area_f5 = AreaF5()
 
 current_progress = "started" #started, searching, collected
 talked_to_grandma = False
+delivered_to_grandma = False
 
 floors = [area_a1, area_a6, area_b1, area_b2, area_b3, area_b5, area_b6, area_c2, area_c3, area_c5, area_d3, area_d4, area_e4, area_f4, area_f5, area_c4]
 objects_to_remove_colors = objects.values()
@@ -183,21 +186,20 @@ def change_gamestate(new_state):
     global world_borders
     global current_progress
 
-    if current_state != new_state:
-        world_objects.clear()
-        world_borders.clear()
-        collidables.empty()
-        current_state = new_state
+    world_objects.clear()
+    world_borders.clear()
+    collidables.empty()
+    current_state = new_state
         
         #Update borders and objects:
-        world_borders = current_state.get_borders()
-        for objectID in current_state.get_objects():
-            if objectID in objects.keys():
-                world_objects.append(objects[objectID])
-                collidables.add(objects[objectID])
+    world_borders = current_state.get_borders()
+    for objectID in current_state.get_objects():
+        if objectID in objects.keys():
+            world_objects.append(objects[objectID])
+            collidables.add(objects[objectID])
                 
-        if current_progress == "started" and talked_to_grandma:
-            current_progress = "searching"
+    if current_progress != "collected" and talked_to_grandma:
+        current_progress = "searching"
 
 
 def find_area(areaID):
@@ -440,10 +442,13 @@ while running:
                     obj.interact()
                     dialogue_active = True
                 if obj.ID == "apple01":
-                    # pickup
+                    print("interacted with apple")
+                    current_progress = "collected"
+                    area_a1.objects.clear()
+                    change_gamestate(area_a1)
                     pass
                 # More interaction with other objects
-                
+        print(current_progress)
                 
             
         #else:
@@ -461,20 +466,29 @@ while running:
         elif current_progress == "collected":
             test_scene1b.run()
             dialogue_active = not test_scene1b.is_finished()
+            delivered_to_grandma = True
         
         if dialogue_active == False:
             pygame.time.wait(200)
-    
+
     
     test_scene.dialogue_index = 0
     test_scene1a.dialogue_index = 0
     test_scene1b.dialogue_index = 0
     #Draw the UI here
     
-    map.run(screen, 600, 200)
+    
+    #VICTORY!!!!
+    while delivered_to_grandma:
+        test_end_screen.run(screen)
+        
+    
+    map.run(screen, 600, 100)
 
     # Update display
     pygame.display.flip()
+    
+    
 
 
 # Clean up

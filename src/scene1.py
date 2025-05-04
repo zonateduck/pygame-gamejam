@@ -42,7 +42,7 @@ class Scene1:
         self.screen = screen  # Keep track of the screen passed from main
 
         # Portrait size and position logic
-        self.PORTRAIT_WIDTH = 120
+        self.PORTRAIT_WIDTH = 160
         self.PORTRAIT_HEIGHT = 160
 
         # Load portraits
