@@ -6,7 +6,7 @@ BACKGROUND = BACKGROUND_L2
 class AreaF5:
     def __init__(self):
         self.areaID = "area_f5"
-        self.objects = [] #Which objects exist in this area?
+        self.objects = ["lake03", "lake04"] #Which objects exist in this area?
         
         self.background = pygame.image.load(BACKGROUND)
         
