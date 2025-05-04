@@ -1,9 +1,12 @@
 import pygame
 from assets import GRANDMASPRITE
+from sound import *
+
 
 SPRITE = GRANDMASPRITE
 
 class Grandma(pygame.sprite.Sprite):
+
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"

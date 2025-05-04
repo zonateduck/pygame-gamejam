@@ -70,7 +70,7 @@ from interactionsystem import draw_interaction_prompt
 
 # Initialize pygame
 pygame.init()
-
+pygame.mixer.init()
 
 # Set up the window
 WIDTH, HEIGHT = 1280, 720
@@ -94,6 +94,12 @@ BLUE = (0, 0, 255)
 #Creates a group for collidable objects    
 collidables = pygame.sprite.Group()
 
+#Sounds
+from sound import *
+
+#Music stuffs
+pygame.mixer.music.load(TRACK1)
+pygame.mixer.music.play(-1)
 # Dialogues variables
 
 
@@ -128,7 +134,7 @@ objects = {
     "tree03" : TreeObject("tree03", 200, 200),
     "tree04" : TreeObject("tree04", 700, 100),
     "tree05" : TreeObject("tree05", 200, 400),
-    "tree06" : TreeObject("tree06", 100, 300),
+    "tree06" : TreeObject("tree06", 800, 300),
     "tree07" : TreeObject("tree07", 900, 300),
 }
 
@@ -306,6 +312,7 @@ def draw_world_objects():
 
 
 
+space_pressed_last_frame = False
 
 # Game loop
 running = True
@@ -328,6 +335,8 @@ while running:
     v = 0.7071067811865476
 
     keys = pygame.key.get_pressed()
+    space_pressed_now = keys[pygame.K_SPACE]
+
     dx, dy = 0,0
 #Diagonal keybinds
 
@@ -447,6 +456,8 @@ while running:
     for obj in world_objects:
         screen.blit(obj.image, obj.rect)
         #TODO: screen.blit(obj.image, obj.rect) to load the image
+
+
     
     for obj in world_objects:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
@@ -454,26 +465,31 @@ while running:
             #Show text: "Space to talk" (some sort of UI element)
             draw_interaction_prompt(screen)
             # Code to handle interaction 
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_SPACE] and not space_pressed_last_frame:
                 # Interaction depending on ID
-                if obj.ID == "GrandmaTest":
+                if obj.ID == "grandma":
                     obj.interact()
+                    Sound.GrannyYap()
                     dialogue_active = True
+                    break
+
                 if obj.ID == "apple01":
                     # pickup
                     pass
+            break
                 # More interaction with other objects
-                
+                    
                 
             
         #else:
             #print("Cant interact :3")
         
-        while dialogue_active == True:
-            test_scene.run()
-            dialogue_active = not test_scene.is_finished()
+    while dialogue_active == True:
+        test_scene.run()
+        dialogue_active = not test_scene.is_finished()
     
     
+    space_pressed_last_frame = space_pressed_now
     
     #Draw the UI here
     

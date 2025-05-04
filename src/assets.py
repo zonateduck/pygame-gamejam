@@ -47,3 +47,13 @@ BACKGROUND_05 = path + "/assets/background5.png"
 HOUSESPRITE = path + "/assets/house.png"
 GRANDMA = path + "/assets/grandma portrait.png"
 IRIS = path + "/assets/iris portrait.png"
+
+
+
+#Sounds
+ANIMALYAP = path +"/assets/Animal Crossing And Talking Meme Sound Effect.wav"
+STEPSOUND = path +"/assets/stepsound.wav"
+
+#Musics
+TRACK1 = path + "/assets/Sunkissed Meadows (Overworld by Daytime).wav"
+

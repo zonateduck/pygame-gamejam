@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+from sound import *
 from assets import GRANDMA
 from assets import IRIS
 from assets import BACKGROUND
@@ -9,6 +10,8 @@ from assets import BACKGROUND
 GRANDMAPORTRAIT = GRANDMA  # Replace with the actual path
 IRISPORTRAIT = IRIS  # Replace with the actual path
 BACKGROUND1 = BACKGROUND
+
+noise = Sound()
 
 # Screen settings
 class Scene1:
@@ -112,6 +115,7 @@ class Scene1:
             rendered_text = self.FONT.render(line, True, self.TEXT_COLOR)
             self.screen.blit(rendered_text, (box_rect.x + self.BOX_PADDING, box_rect.y + self.BOX_PADDING + y_offset))
             y_offset += self.FONT.get_linesize()
+            
     def handle_npc_interaction():
         global quest_stage, item1_visible, item2_visible
 
