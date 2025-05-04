@@ -468,7 +468,7 @@ while running:
             # Code to handle interaction 
             if keys[pygame.K_SPACE]:
                 # Interaction depending on ID
-                if obj.ID == "GrandmaTest":
+                if obj.ID == "grandma":
                     obj.interact()
                     dialogue_active = True
                 if obj.ID == "apple01":
@@ -480,10 +480,11 @@ while running:
             
         #else:
             #print("Cant interact :3")
-        
-        while dialogue_active == True:
-            test_scene.run()
-            dialogue_active = not test_scene.is_finished()
+
+    while dialogue_active == True:
+        print("should run")
+        test_scene.run()
+        dialogue_active = not test_scene.is_finished()
     
     
     

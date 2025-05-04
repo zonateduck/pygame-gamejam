@@ -22,14 +22,21 @@ class Scene1:
 
         # Dialogue content
         self.dialogue = [
-            "Iris, my dear... Can you please bring me a cup of tea?",
-            "Of course, Granny!"
+            "Iris, my dear... Can you please bring me a nice apple? There's bound to be one around somewhere!",
+            "Of course, Granny!",
+            "Be careful! It's easy to get lost around these woods.",
+            "I know, Granny!",
+            "Make sure to use your MAP to find your way around!"
         ]
 
         self.speakers = [
-    "Granny",
-    "Iris"
-]
+            "Granny",
+            "Iris"
+            "Granny",
+            "Iris"
+            "Granny",
+            "Iris"
+        ]
 
         self.dialogue_index = 0
         self.screen = screen  # Keep track of the screen passed from main
