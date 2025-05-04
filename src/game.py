@@ -14,9 +14,15 @@ from Levels.StartScreen import StartScreen
 #Importing objects
 from Objects.TestObject1 import TestObject1
 from Objects.BlomstObject import BlomstObject
+from Objects.GrandmaObject import Grandma
+
 from colorGrading import *
 
 from player import Player
+
+# Dialogue handles
+from interactionsystem import draw_interaction_prompt
+
 
 
 # Initialize pygame
@@ -42,7 +48,7 @@ FRAMERATE = 60
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
-    
+# Dialogues variables
 
 
 
@@ -55,7 +61,7 @@ player = Player(screen, x, y, speed)
 
 obj_range = 15   #How big a range the interaction-area has
 
-
+grandma = Grandma("GrandmaTest", 900, 700)
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
     "testobject01" : TestObject1("testobject01", 200, 300),
@@ -63,7 +69,8 @@ objects = {
     "blomst02" : BlomstObject("blomst02", 600, 600),
     "blomst03" : BlomstObject("blomst03", 30, 500),
     "blomst04" : BlomstObject("blomst04", 300, 800),
-    "blomst05" : BlomstObject("blomst05", 400, 60)
+    "blomst05" : BlomstObject("blomst05", 400, 60),
+    "grandma" : grandma
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -197,28 +204,34 @@ while running:
 
     # Draw "Player"
     #pygame.draw.rect(screen, BLUE, (x, y, size, size))
-    fake_player_interaction_rect = pygame.Rect(x - size/2, y - size/2, size + obj_range, size + obj_range)
+    fake_player_interaction_rect = pygame.Rect(player.x - size/2, player.y - size/2, size + obj_range, size + obj_range)
 
     screen.blit(player.image, player.rect)
     player.update()
-
+    screen.blit(grandma.image, grandma.rect)
 
     #   DRAW WORLD OBJECTS 
     #Draw world objects
     for obj in world_objects:
-        pygame.draw.rect(screen, obj.COLOR, (obj.x, obj.y, obj.size, obj.size))
+        screen.blit(obj.image, obj.rect)
         #TODO: screen.blit(obj.image, obj.rect) to load the image
     
     for obj in world_objects:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect):
             print("Can interact!")
-            #TODO: Show text: "Space to talk" (some sort of UI element)
-            #TODO: if player presses space:
-                # Code to handle interaction
+            #Show text: "Space to talk" (some sort of UI element)
+            draw_interaction_prompt(screen)
+            # Code to handle interaction
+            if keys[pygame.K_SPACE]:
+                obj.interact()
+                 #   DRAW DIALOGUE BOXES:
+                
+
         else:
             print("Cant interact :3")
 
-    #   DRAW DIALOGUE BOXES:
+   
+    
     
     #Draw the UI here
 
