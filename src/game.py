@@ -102,7 +102,7 @@ from scene7 import Scene7
 from scene8 import Scene8
 from scene9 import Scene9
 
-test_scene = Scene9(screen)
+test_scene = Scene4(screen)
 
 
 #This makes sure the game is not in two states at the same time :)
