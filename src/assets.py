@@ -8,6 +8,7 @@ BACKGROUND = asset_path
 
 # Objects
 
+path = "pygame-gamejam" #or use pygame-gamejam
 path = "pygame-gamejam"
 
 MAP =  path + "/assets/map_2.png"
