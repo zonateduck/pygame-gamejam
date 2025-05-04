@@ -3,7 +3,7 @@ from assets import GRANDMASPRITE
 
 SPRITE = GRANDMASPRITE
 
-class Grandma():
+class Grandma(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"

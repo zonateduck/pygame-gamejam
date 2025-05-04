@@ -50,6 +50,9 @@ FRAMERATE = 60
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
+#Creates a group for collidable objects    
+collidables = pygame.sprite.Group()
+
 # Dialogues variables
 
 
@@ -111,6 +114,7 @@ def change_gamestate(new_state):
         for objectID in current_state.get_objects():
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
+                collidables.add(objects[objectID])
 
 
 def find_area(areaID):
@@ -153,28 +157,80 @@ while running:
     TARGET_COLOR = 		(204,0,0)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
+#Verdi å gange med for å få diagonal hastighet til å være lik straight:
+    v = 0.7071067811865476
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_a]:
+    dx, dy = 0,0
+#Diagonal keybinds
+
+    if keys[pygame.K_a] and keys[pygame.K_w]:
+        if not (x < 0 and ("LEFT" in world_borders or "UP" in world_borders)):
+            #background = convert_to_black_and_white(background.copy())
+            dx = - (speed * v)
+            dy = - (speed * v)
+            player.facing = "up_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_d] and keys[pygame.K_w]:
+        if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "UP" in world_borders)):
+            #background = remove_blue_channel(background.copy())
+            dx += (speed * v)
+            dy -= (speed * v)
+            player.facing = "up_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_a] and keys[pygame.K_s]:
+        if not (x < 0 and ("LEFT" in world_borders or "DOWN" in world_borders)):
+            #background = convert_to_black_and_white(background.copy())
+            dx -= (speed * v)
+            dy += (speed * v)
+            player.facing = "down_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_d] and keys[pygame.K_s]:
+        if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "DOWN" in world_borders)):
+            #background = remove_blue_channel(background.copy())
+            dx += (speed * v)
+            dy += (speed * v)
+            player.facing = "down_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+
+
+#Straight keybinds:
+    elif keys[pygame.K_a]:
         if not (x < 0 and "LEFT" in world_borders):
             #background = convert_to_black_and_white(background.copy())
-            player.x -= speed
+            dx -= speed
             player.facing = "left"
-    if keys[pygame.K_d]:
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+    elif keys[pygame.K_d]:
         if not (x > (WIDTH - size) and "RIGHT" in world_borders):
             #background = remove_blue_channel(background.copy())
-            player.x += speed
+            dx += speed
             player.facing = "right"
-    if keys[pygame.K_w]:
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+    elif keys[pygame.K_w]:
         if not (y < 0 and "UP" in world_borders):
             #background = remove_red_channel(background.copy())
-            player.y -= speed
+            dy -= speed
             player.facing = "up"
-    if keys[pygame.K_s]:
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
+    elif keys[pygame.K_s]:
         if not (y > (HEIGHT - size) and "DOWN" in world_borders):
             #background = remove_green_channel(background.copy())
-            player.y += speed
+            dy += speed
             player.facing = "down"
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
     if keys[pygame.K_1]: #DEBUG BUTTON
         background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 

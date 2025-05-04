@@ -1,8 +1,14 @@
 import pygame
 
+#TODO delete:
+#Important to create the objects in the levels as such:
+
+#        wall = TestObject1(300, 300)
+#        world_objects.append(wall)
+#        collidables.add(wall)  # Ïmportant!! Add it do the collidables group!
 
 SPRITE = ""
-class TestObject1():
+class TestObject1(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
@@ -24,6 +30,9 @@ class TestObject1():
         dialogue = ["dialogueID"]   #What dialogues are available.
         flags = {}  #Dictionary for various flags
         self.canInteract = False
+
+        #self.collison_enabled = True/False (det vi vil objektet skal være)
+
     
     def canInteract(self):
         return self.canInteract

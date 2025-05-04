@@ -4,14 +4,13 @@ from assets import PLAYERSPRITE_UP
 from assets import PLAYERSPRITE_LEFT
 from assets import PLAYERSPRITE_RIGHT
 from assets import PLAYERSPRITE_DOWN
-
-
-
-#TODO: remove
+from assets import PLAYERSPRITE_DOWNRIGHT
+from assets import PLAYERSPRITE_DOWNLEFT
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, speed):
+        super().__init__()
         screen_height, screen_width = screen.get_size()
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
@@ -52,6 +51,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         #Player_animation(self)
+    
+    #Checks for collision
+    def can_move_to(self, dx, dy, collidables):
+        future_pos_rect = self.rect.move(dx, dy)  #Creates a rectangle and sees if it collides with anything in the future position
+        #Checks for an object in the future spot and returns True if it isnt there
+        return not pygame.sprite.spritecollideany(self, collidables, collided=lambda s1
+                                                  , s2: future_pos_rect.colliderect(s2.rect))
 
 
 
@@ -100,7 +106,16 @@ class Player(pygame.sprite.Sprite):
             self.playersprite = PLAYERSPRITE_DOWN
         if self.facing == "up":
             self.playersprite = PLAYERSPRITE_UP  
-            
+        if self.facing == "up_right":
+            self.playersprite = PLAYERSPRITE_UP
+        if self.facing == "up_left":
+            self.playersprite = PLAYERSPRITE_UP
+        if self.facing == "down_left":
+            self.playersprite = PLAYERSPRITE_DOWNLEFT
+        if self.facing == "down_right":
+            self.playersprite = PLAYERSPRITE_DOWNRIGHT  
+        
+        
         self.rect.x = self.x
         self.rect.y = self.y
 

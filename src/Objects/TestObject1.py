@@ -3,7 +3,7 @@ import pygame
 
 SPRITE = "../assets/houseplaceholder.png"
 
-class TestObject1():
+class TestObject1(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #string
@@ -30,6 +30,7 @@ class TestObject1():
     
         # Handles interaction
         self.canInteract = False
+        self.collison_enabled = True
 
     def canInteract(self):
         return self.canInteract
