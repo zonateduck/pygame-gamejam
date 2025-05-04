@@ -21,3 +21,8 @@ PLAYERSPRITE_DOWN = path  + "/assets/iris left.png"
 
 TREESPRITE = path + "/assets/tree.png"
 APPLESPRITE = path + "/assets/apple.jpg"
+
+BACKGROUND_02 = path + "/assets/background2.png"
+BACKGROUND_03 = path + "/assets/background3.png"
+BACKGROUND_04 = path + "/assets/background4.png"
+BACKGROUND_05 = path + "/assets/background5.png"

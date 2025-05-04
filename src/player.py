@@ -92,7 +92,6 @@ class Player(pygame.sprite.Sprite):
         #self.animate()
 
         if self.facing == "right":
-            print("moving right")
             self.playersprite = PLAYERSPRITE_RIGHT
         if self.facing == "left":
             self.playersprite = PLAYERSPRITE_LEFT
