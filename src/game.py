@@ -213,24 +213,6 @@ area_e4 = AreaE4()
 area_f4 = AreaF4()
 area_f5 = AreaF5()
 
-
-area_a1 = AreaA1()
-area_a6 = AreaA6()
-area_b1 = AreaB1()
-area_b2 = AreaB2()
-area_b3 = AreaB3()
-area_b5 = AreaB5()
-area_b6 = AreaB6()
-area_c2 = AreaC2()
-area_c3 = AreaC3()
-area_c4 = AreaC4()
-area_c5 = AreaC5()
-area_d3 = AreaD3()
-area_d4 = AreaD4()
-area_e4 = AreaE4()
-area_f4 = AreaF4()
-area_f5 = AreaF5()
-
 current_state = test_start_screen
 default_area = area_c3 #Should be c3 in the end :)
 
@@ -368,7 +350,7 @@ while running:
                 current_line += 1
                 show_line()
             else:
-                if player.colliderect(npc):
+                if player.colliderect(GRANDMA):
                     if quest_stage == 0:
                         start_dialogue(0)
                         quest_stage = 1
@@ -417,7 +399,7 @@ while running:
 
     keys = pygame.key.get_pressed()
     dx, dy = 0,0
-    #Diagonal keybinds
+#Diagonal keybinds
 
     if keys[pygame.K_a] and keys[pygame.K_w]:
         if not (x < 0 and ("LEFT" in world_borders or "UP" in world_borders)):
@@ -490,6 +472,7 @@ while running:
         background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
     player.update()
+
     #Draw background
     screen.blit(background, (0, 0))
 
@@ -551,20 +534,11 @@ while running:
                     # pickup
                     pass
                 # More interaction with other objects
-                
-                
-            
+
         #else:
             #print("Cant interact :3")
-        
-        while dialogue_active == True:
-            test_scene.run()
-            dialogue_active = not test_scene.is_finished()
-    
-    
-    
+
     #Draw the UI here
-    
     map.run(screen, 600, 200)
 
     # Update display
