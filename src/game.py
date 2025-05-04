@@ -11,6 +11,24 @@ from Levels.TestScreen1 import TestScreen1
 from Levels.TestScreen2 import TestScreen2
 from Levels.StartScreen import StartScreen
 
+from Levels.AreaA1 import AreaA1
+from Levels.AreaA6 import AreaA6
+from Levels.AreaB1 import AreaB1
+from Levels.AreaB2 import AreaB2
+from Levels.AreaB3 import AreaB3
+from Levels.AreaB5 import AreaB5
+from Levels.AreaB6 import AreaB6
+from Levels.AreaC2 import AreaC2
+from Levels.AreaC3 import AreaC3
+from Levels.AreaC4 import AreaC4
+from Levels.AreaC5 import AreaC5
+from Levels.AreaD3 import AreaD3
+from Levels.AreaD4 import AreaD4
+from Levels.AreaE4 import AreaE4
+from Levels.AreaF4 import AreaF4
+from Levels.AreaF5 import AreaF5
+
+
 #Importing objects
 from Objects.TestObject1 import TestObject1
 from Objects.TreeObject import TreeObject
@@ -59,7 +77,7 @@ collidables = pygame.sprite.Group()
 
 # Game variables
 x, y = 100, 100
-speed = 5
+speed = 10
 size = 50
 
 dialogue_active = False
@@ -88,9 +106,28 @@ world_borders = []  #Updates based on current_state.get_borders()
 transition_threshold = 5    #How many pixels off-screen before transition
 
 #GameState manager
+#Instantiate EVERYTHING
 test_start_screen = StartScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
+
+area_a1 = AreaA1()
+area_a6 = AreaA6()
+area_b1 = AreaB1()
+area_b2 = AreaB2()
+area_b3 = AreaB3()
+area_b5 = AreaB5()
+area_b6 = AreaB6()
+area_c2 = AreaC2()
+area_c3 = AreaC3()
+area_c4 = AreaC4()
+area_c5 = AreaC5()
+area_d3 = AreaD3()
+area_d4 = AreaD4()
+area_e4 = AreaE4()
+area_f4 = AreaF4()
+area_f5 = AreaF5()
+
 
 current_state = test_start_screen
 
@@ -123,6 +160,38 @@ def find_area(areaID):
             new_state = test_screen1
         case "test02" : 
             new_state = test_screen2
+        case "area_a1" : 
+            new_state = area_a1
+        case "area_a6" : 
+            new_state = area_a6
+        case "area_b1" : 
+            new_state = area_b1
+        case "area_b2" : 
+            new_state = area_b2
+        case "area_b3" : 
+            new_state = area_b3
+        case "area_b5" : 
+            new_state = area_b5
+        case "area_b6" : 
+            new_state = area_b6
+        case "area_c2" : 
+            new_state = area_c2
+        case "area_c3" : 
+            new_state = area_c3
+        case "area_c4" : 
+            new_state = area_c4
+        case "area_c5" : 
+            new_state = area_c5
+        case "area_d3" : 
+            new_state = area_d3
+        case "area_d4" : 
+            new_state = area_d4
+        case "area_e4" : 
+            new_state = area_e4
+        case "area_f4" : 
+            new_state = area_f4
+        case "area_f5" : 
+            new_state = area_f5
         case _: #If areaID did not match
             print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
             new_state = current_state
@@ -247,12 +316,10 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print("pressed space")
-                    change_gamestate(test_screen1)
+                    change_gamestate(area_a1)
 
-    if current_state == test_screen1:
-        current_state.run(screen) #This makes the current_scene display and do its stuff!
-    if current_state == test_screen2:
-        current_state.run(screen)
+    current_state.run(screen)
+        
 
     #Logic for player going to new area :D
     if player.x < 0 - transition_threshold:
@@ -285,7 +352,7 @@ while running:
     
     for obj in world_objects:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
-            print("Can interact!")
+            #print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
             draw_interaction_prompt(screen)
             # Code to handle interaction 
@@ -301,8 +368,8 @@ while running:
                 
                 
             
-        else:
-            print("Cant interact :3")
+        #else:
+            #print("Cant interact :3")
         
         while dialogue_active == True:
             test_scene.run()

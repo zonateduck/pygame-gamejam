@@ -18,13 +18,25 @@ BOX_PADDING = 20
 
 # Dialogue content and who is speaking (left or right)
 dialogue = [
-    "Iris, my dear... Can you please bring me a cup of tea?",
-    "Of course, Granny!"
+    "You are not my gradnma! What did you do to her?!",
+    "Oh, honey, she's just stuck in the painting over the fireplace, don't worry, she's warm and cozy and colorless.",
+    "You are the one stealing the colors!",
+    "You catch on quickly... Well, if you want to save dear granny, you will bring me her rainbow scarf.",
+    "And if not?",
+    "If not, your dear granny will forever be just a painting...",
+    "Why can't you just take it yourself?",
+    "Oh, dearest Iris, I would. You see... Your granny is smart, she protects her belongings. Only you can find the scarf."
 ]
 
 speakers = [
+    "Iris",
     "Granny",
-    "Iris"
+    "Iris",
+    "Granny",
+    "Iris",
+    "Granny",
+    "Iris",
+    "Granny"
 ]
 
 # Portrait size and position logic
@@ -34,8 +46,6 @@ PORTRAIT_COLOR = (255, 182, 193)
 
 def draw_portrait(position):
     if position == "left":
-        # TODO: the rectangles should be replaced with character portraits, 
-        # left is always Iris, right is either empty or Granny
         rect = pygame.Rect(50, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
     elif position == "right":
         rect = pygame.Rect(SCREEN_WIDTH - 50 - PORTRAIT_WIDTH, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
@@ -105,65 +115,3 @@ while running:
 
 pygame.quit()
 sys.exit()
-import pygame
-import sys
-
-
-# Screen settings
-class Scene1:
-    def __init__(self, screen):
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = screen.get_size()
-        self.FONT = pygame.font.SysFont("lucida console", 24)
-        self.TEXT_COLOR = (255, 255, 255)
-        self.BOX_COLOR = (0, 0, 0)
-        self.BOX_PADDING = 20
-        self.finished = True
-
-        # Dialogue content
-        self.dialogue = [
-            "Granny: \"Iris, my dear...\"",
-            "Granny: \"Can you please bring me a cup of tea?\"",
-            "Iris: \"Of course, Granny!\""
-        ]
-        self.dialogue_index = 0
-        self.screen = screen  # Keep track of the screen passed from main
-
-    # Function to draw text box and current dialogue
-    def draw_text_box(self, text):
-        # Draw box
-        box_rect = pygame.Rect(50, self.SCREEN_HEIGHT - 150, self.SCREEN_WIDTH - 100, 100)
-        pygame.draw.rect(self.screen, self.BOX_COLOR, box_rect)
-        
-        # Draw text
-        rendered_text = self.FONT.render(text, True, self.TEXT_COLOR)
-        self.screen.blit(rendered_text, (box_rect.x + self.BOX_PADDING, box_rect.y + self.BOX_PADDING))
-
-    # Game loop
-    def is_finished(self):
-        return self.finished
-    
-    def run(self):
-
-        # Draw dialogue box
-        if self.dialogue_index < len(self.dialogue):
-            self.draw_text_box(self.dialogue[self.dialogue_index])
-            self.finished = False
-        else:
-            self.draw_text_box("")
-            self.finished = True
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            
-            # Advance dialogue on spacebar press
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and self.dialogue_index < len(self.dialogue):
-                    self.dialogue_index += 1
-                    # If player reads to fast and wants to reset
-                if event.key == pygame.K_r:
-                    self.dialogue_index = 0
-                    self.finished = False
-
-        pygame.display.flip()
