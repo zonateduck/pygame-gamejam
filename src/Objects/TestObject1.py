@@ -1,7 +1,7 @@
 import pygame
 
-
-SPRITE = "../assets/houseplaceholder.png"
+from assets import HOUSESPRITE
+SPRITE = HOUSESPRITE
 
 class TestObject1(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):

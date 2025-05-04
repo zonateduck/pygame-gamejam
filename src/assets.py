@@ -8,8 +8,10 @@ BACKGROUND = asset_path
 
 # Objects
 
-path = ".."
+path = "pygame-gamejam"
 
+MAP =  path + "/assets/map_2.png"
+MAPICON = path + "/assets/map_icon.png"
 BLOMSTSPRITE = path + "/assets/flower.jpeg"
 GRANDMASPRITE = path  + "/assets/grandma little slouch.png"
 
@@ -40,3 +42,8 @@ BACKGROUND_B1 = path + "/assets/background_basic1.png"
 BACKGROUND_B2 = path + "/assets/background_basic2.png"
 BACKGROUND_B3 = path + "/assets/background_basic3.png"
 BACKGROUND_05 = path + "/assets/background5.png"
+
+
+HOUSESPRITE = path + "/assets/houseplaceholder.png"
+GRANDMA = path + "/assets/grandma portrait.png"
+IRIS = path + "/assets/iris portrait.png"

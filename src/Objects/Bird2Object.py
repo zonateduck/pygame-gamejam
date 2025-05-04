@@ -3,7 +3,7 @@ import pygame
 from assets import TWOBIRDSPRITE
 
 SPRITE = TWOBIRDSPRITE
-class Bird2Object():
+class Bird2Object(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
