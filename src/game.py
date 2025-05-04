@@ -53,6 +53,7 @@ from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
 from Objects.AppleObject import AppleObject
 from Objects.CatObject import CatObject
+from Objects.ButterflyObject import ButterflyObject
 from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
@@ -119,6 +120,7 @@ objects = {
     "house" : HouseObject("house", 800, 150),
     "grandma" : Grandma("grandma", 810, 330),
     "cat" : CatObject("cat", 1000, 100),
+    "butterfly" : ButterflyObject("butterfly", 800, 150), 
     "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
     "bird01" : BirdObject("bird01", 300, 100),
     "bird02" : BirdObject("bird01", 20, 400),
