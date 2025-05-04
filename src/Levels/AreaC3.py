@@ -1,6 +1,7 @@
 import pygame
 
 from assets import BACKGROUND_B3
+from colorGrading import remove_color
 BACKGROUND = BACKGROUND_B3
 
 class AreaC3:
@@ -19,6 +20,7 @@ class AreaC3:
         screen.blit(self.background, (0, 0))
         screen.blit(self.text_debug, (0, 0))
         #Draw the background here
+        
 
 
     def get_adjacent_area(self, direction):

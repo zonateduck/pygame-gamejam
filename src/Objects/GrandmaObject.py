@@ -11,7 +11,8 @@ class Grandma(pygame.sprite.Sprite):
         self.size = 120
         self.x = x
         self.y = y
-        self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
+        hitbox = self.size / 10
+        self.collision_rect = pygame.Rect(self.x, self.y, hitbox, hitbox)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         self.dialoguesToPlay = 0
         self.grandmasprite = SPRITE

@@ -11,7 +11,7 @@ class TreeObject(pygame.sprite.Sprite):
         self.size = 240
         self.x = x
         self.y = y
-        self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
+        self.collision_rect = pygame.Rect(self.x + self.size / 2, self.y  + self.size / 2, self.size / 3, self.size / 2)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         
 

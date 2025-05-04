@@ -112,6 +112,37 @@ class Scene1:
             rendered_text = self.FONT.render(line, True, self.TEXT_COLOR)
             self.screen.blit(rendered_text, (box_rect.x + self.BOX_PADDING, box_rect.y + self.BOX_PADDING + y_offset))
             y_offset += self.FONT.get_linesize()
+    def handle_npc_interaction():
+        global quest_stage, item1_visible, item2_visible
+
+        if quest_stage == 0:
+            quest_stage = 1
+            item1_visible = True
+            return ("NPC: Oh dear! I lost my knitting yarn in the orchard...")
+
+
+        elif quest_stage == 2:
+            quest_stage = 3
+            return ("NPC: Thank you, sweetpea! Now I can finish my scarf.")
+
+
+        elif quest_stage == 3:
+            quest_stage = 4
+            item2_visible = True
+            return ("NPC: Hmm... now I’ve lost my reading glasses in the garden...")
+
+
+        elif quest_stage == 5:
+            quest_stage = 6
+            return("NPC: My glasses! You’re a star, darling. Thank you!")
+
+
+        elif quest_stage in [1, 4]:
+            return("NPC: Have you found what I asked for yet?")
+
+        elif quest_stage == 6:
+            return("NPC: That’s all for now. Go enjoy some tea under the rainbow.")
+
 
     # Game loop
     def is_finished(self):
