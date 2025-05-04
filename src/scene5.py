@@ -18,12 +18,10 @@ BOX_PADDING = 20
 
 # Dialogue content and who is speaking (left or right)
 dialogue = [
-    "You know what, child? I always wanted a pet butterfly. Could you find one for me?",
-    "I've seen some in the garden... Maybe I could catch one for you. I'll find the most beautiful one!"
+    "Grandma is behaving weirdly... I better check up on her."
 ]
 
 speakers = [
-    "Granny",
     "Iris"
 ]
 

@@ -18,13 +18,13 @@ BOX_PADDING = 20
 
 # Dialogue content and who is speaking (left or right)
 dialogue = [
-    "You know what, child? I always wanted a pet butterfly. Could you find one for me?",
-    "I've seen some in the garden... Maybe I could catch one for you. I'll find the most beautiful one!"
+    "We did it! We saved grandma and colors!",
+    "Oh, my dearest Iris, I knew you could do it!"
 ]
 
 speakers = [
-    "Granny",
-    "Iris"
+    "Iris",
+    "Granny"
 ]
 
 # Portrait size and position logic

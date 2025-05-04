@@ -18,13 +18,25 @@ BOX_PADDING = 20
 
 # Dialogue content and who is speaking (left or right)
 dialogue = [
-    "You know what, child? I always wanted a pet butterfly. Could you find one for me?",
-    "I've seen some in the garden... Maybe I could catch one for you. I'll find the most beautiful one!"
+    "You are not my gradnma! What did you do to her?!",
+    "Oh, honey, she's just stuck in the painting over the fireplace, don't worry, she's warm and cozy and colorless.",
+    "You are the one stealing the colors!",
+    "You catch on quickly... Well, if you want to save dear granny, you will bring me her rainbow scarf.",
+    "And if not?",
+    "If not, your dear granny will forever be just a painting...",
+    "Why can't you just take it yourself?",
+    "Oh, dearest Iris, I would. You see... Your granny is smart, she protects her belongings. Only you can find the scarf."
 ]
 
 speakers = [
+    "Iris",
     "Granny",
-    "Iris"
+    "Iris",
+    "Granny",
+    "Iris",
+    "Granny",
+    "Iris",
+    "Granny"
 ]
 
 # Portrait size and position logic
@@ -34,8 +46,6 @@ PORTRAIT_COLOR = (255, 182, 193)
 
 def draw_portrait(position):
     if position == "left":
-        # TODO: the rectangles should be replaced with character portraits, 
-        # left is always Iris, right is either empty or Granny
         rect = pygame.Rect(50, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
     elif position == "right":
         rect = pygame.Rect(SCREEN_WIDTH - 50 - PORTRAIT_WIDTH, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
