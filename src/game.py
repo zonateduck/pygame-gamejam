@@ -17,6 +17,9 @@ from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
 from Objects.AppleObject import AppleObject
 
+
+from Levels.Music import Music
+
 from colorGrading import *
 
 from player import Player
@@ -66,7 +69,7 @@ player = Player(screen, x, y, speed)
 map = Map(screen)
 
 obj_range = 15   #How big a range the interaction-area has
-
+music = Music()
 grandma = Grandma("GrandmaTest", 900, 700)
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)

@@ -1,12 +1,17 @@
 import pygame
 import sys
 
+from assets import MAP
+from assets import MAP_ICON
+
+MAPSPRITE = MAP
+MAPICON = MAP_ICON
 
 class Map():
     def __init__(self, screen):
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = screen.get_size()
-        self.image = pygame.image.load("../assets/map_2.png")
-        self.icon = pygame.image.load("../assets/map_icon.png")
+        self.image = pygame.image.load(MAPSPRITE)
+        self.icon = pygame.image.load(MAPICON)
         self.visible = False
         
     def run(self, screen, x, y):
