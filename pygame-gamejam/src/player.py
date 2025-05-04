@@ -1,10 +1,11 @@
-import pygame, sys, playerAnimation
+import pygame, sys, playerAnimation, math
 
 #TODO: remove
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen, x, y, speed):
+        super().__init__()
         screen_height, screen_width = screen.get_size()
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
@@ -45,6 +46,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         #Player_animation(self)
+
+    #Checks for collision
+    def can_move_to(self, dx, dy, collidables):
+        future_pos_rect = self.rect.move(dx, dy)  #Creates a rectangle and sees if it collides with anything in the future position
+        #Checks for an object in the future spot and returns True if it isnt there
+        return not pygame.sprite.spritecollideany(self, collidables, collided=lambda s1
+                                                  , s2: future_pos_rect.colliderect(s2.rect))
 
 
 
