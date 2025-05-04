@@ -6,7 +6,7 @@ BACKGROUND = BACKGROUND_B1
 class AreaB3:
     def __init__(self):
         self.areaID = "area_b3"
-        self.objects = [] #Which objects exist in this area?
+        self.objects = ["tutor"] #Which objects exist in this area?
         
         self.background = pygame.image.load(BACKGROUND)
         
