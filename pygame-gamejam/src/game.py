@@ -21,7 +21,6 @@ from player import Player
 # Initialize pygame
 pygame.init()
 
-
 # Set up the window
 WIDTH, HEIGHT = 1920, 1080
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -41,8 +40,8 @@ FRAMERATE = 60
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
-    
-
+#Creates a group for collidable objects    
+collidables = pygame.sprite.Group()
 
 
 # Game variables
@@ -129,56 +128,77 @@ while running:
     v = 0.7071067811865476
 
     keys = pygame.key.get_pressed()
-
+    dx, dy = 0,0
 #Diagonal keybinds
+
     if keys[pygame.K_a] and keys[pygame.K_w]:
         if not (x < 0 and ("LEFT" in world_borders or "UP" in world_borders)):
             #background = convert_to_black_and_white(background.copy())
-            player.x -= (speed * v)
-            player.y -= (speed * v)
+            dx = - (speed * v)
+            dy = - (speed * v)
             player.facing = "up_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
     elif keys[pygame.K_d] and keys[pygame.K_w]:
         if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "UP" in world_borders)):
             #background = remove_blue_channel(background.copy())
-            player.x += (speed * v)
-            player.y -= (speed * v)
+            dx += (speed * v)
+            dy -= (speed * v)
             player.facing = "up_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
     elif keys[pygame.K_a] and keys[pygame.K_s]:
         if not (x < 0 and ("LEFT" in world_borders or "DOWN" in world_borders)):
             #background = convert_to_black_and_white(background.copy())
-            player.x -= (speed * v)
-            player.y += (speed * v)
+            dx -= (speed * v)
+            dy += (speed * v)
             player.facing = "down_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
     elif keys[pygame.K_d] and keys[pygame.K_s]:
         if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "DOWN" in world_borders)):
             #background = remove_blue_channel(background.copy())
-            player.x += (speed * v)
-            player.y += (speed * v)
+            dx += (speed * v)
+            dy += (speed * v)
             player.facing = "down_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
 
-    
 
 #Straight keybinds:
     elif keys[pygame.K_a]:
         if not (x < 0 and "LEFT" in world_borders):
             #background = convert_to_black_and_white(background.copy())
-            player.x -= speed
+            dx -= speed
             player.facing = "left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
     elif keys[pygame.K_d]:
         if not (x > (WIDTH - size) and "RIGHT" in world_borders):
             #background = remove_blue_channel(background.copy())
-            player.x += speed
+            dx += speed
             player.facing = "right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
     elif keys[pygame.K_w]:
         if not (y < 0 and "UP" in world_borders):
             #background = remove_red_channel(background.copy())
-            player.y -= speed
+            dy -= speed
             player.facing = "up"
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
     elif keys[pygame.K_s]:
         if not (y > (HEIGHT - size) and "DOWN" in world_borders):
             #background = remove_green_channel(background.copy())
-            player.y += speed
+            dy += speed
             player.facing = "down"
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
+    
     if keys[pygame.K_1]: #DEBUG BUTTON
         background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
