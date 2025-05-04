@@ -1,62 +1,57 @@
 import pygame
 import sys
 
-# Initialize pygame
-pygame.init()
 
 # Screen settings
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Meowgical Visual Novel")
+class Scene1:
+    def __init__(self, screen):
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = screen.get_size()
+        self.FONT = pygame.font.SysFont("lucida console", 24)
+        self.TEXT_COLOR = (255, 255, 255)
+        self.BOX_COLOR = (0, 0, 0)
+        self.BOX_PADDING = 20
+        self.finished = True
 
-# Fonts
-FONT = pygame.font.SysFont("lucida console", 24)
-TEXT_COLOR = (255, 255, 255)
-BOX_COLOR = (0, 0, 0)
-BOX_PADDING = 20
+        # Dialogue content
+        self.dialogue = [
+            "Granny: \"Iris, my dear...\"",
+            "Granny: \"Can you please bring me a cup of tea?\"",
+            "Iris: \"Of course, Granny!\""
+        ]
+        self.dialogue_index = 0
+        self.screen = screen  # Keep track of the screen passed from main
 
-# Dialogue content
-dialogue = [
-    "Granny: \"Iris, my dear...\"",
-    "Granny: \"Can you please bring me a cup of tea?\"",
-    "Iris: \"Of course, Granny!\""
-]
-dialogue_index = 0
+    # Function to draw text box and current dialogue
+    def draw_text_box(self, text):
+        # Draw box
+        box_rect = pygame.Rect(50, self.SCREEN_HEIGHT - 150, self.SCREEN_WIDTH - 100, 100)
+        pygame.draw.rect(self.screen, self.BOX_COLOR, box_rect)
+        
+        # Draw text
+        rendered_text = self.FONT.render(text, True, self.TEXT_COLOR)
+        self.screen.blit(rendered_text, (box_rect.x + self.BOX_PADDING, box_rect.y + self.BOX_PADDING))
 
-# Function to draw text box and current dialogue
-def draw_text_box(text):
-    # Draw box
-    box_rect = pygame.Rect(50, SCREEN_HEIGHT - 150, SCREEN_WIDTH - 100, 100)
-    pygame.draw.rect(screen, BOX_COLOR, box_rect)
+    # Game loop
+    def is_finished(self):
+        return self.finished
     
-    # Draw text
-    rendered_text = FONT.render(text, True, TEXT_COLOR)
-    screen.blit(rendered_text, (box_rect.x + BOX_PADDING, box_rect.y + BOX_PADDING))
+    def run(self):
+        # Draw dialogue box
+        if self.dialogue_index < len(self.dialogue):
+            self.draw_text_box(self.dialogue[self.dialogue_index])
+            self.finished = False
+        else:
+            self.draw_text_box("")
+            self.finished = True
 
-# Game loop
-clock = pygame.time.Clock()
-running = True
-while running:
-    screen.fill((100, 100, 255))  # Background color
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
-    # Draw dialogue box
-    if dialogue_index < len(dialogue):
-        draw_text_box(dialogue[dialogue_index])
-    else:
-        draw_text_box("The End. Thanks for playing!")
+            # Advance dialogue on spacebar press
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and self.dialogue_index < len(self.dialogue):
+                    self.dialogue_index += 1
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        # Advance dialogue on spacebar press
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and dialogue_index < len(dialogue):
-                dialogue_index += 1
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
-sys.exit()
+        pygame.display.flip()

@@ -24,7 +24,7 @@ pygame.init()
 
 
 # Set up the window
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 GAME_BACKGROUND = BACKGROUND
@@ -50,6 +50,9 @@ BLUE = (0, 0, 255)
 x, y = 100, 100
 speed = 5
 size = 50
+
+dialogue_active = False
+
 
 player = Player(screen, x, y, speed)
 
@@ -80,6 +83,11 @@ test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
 
 current_state = test_start_screen
+
+
+from scene1 import Scene1
+test_scene = Scene1(screen)
+
 
 #This makes sure the game is not in two states at the same time :)
 def change_gamestate(new_state):
@@ -218,7 +226,19 @@ while running:
         else:
             print("Cant interact :3")
 
+
+
     #   DRAW DIALOGUE BOXES:
+        for event in pygame.event.get():    #REPLACE WITH INTERACTION STUFF
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    dialogue_active = True
+        
+        while dialogue_active == True:
+            test_scene.run()
+            dialogue_active = not test_scene.is_finished()
+    
+    
     
     #Draw the UI here
 
