@@ -1,5 +1,8 @@
 import pygame
 
+
+SPRITE = "pygame-gamejam/assets/grandma.png"
+
 class TestObject1():
     def __init__(self, ID, x, y):
         super().__init__()
@@ -11,6 +14,12 @@ class TestObject1():
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         
+
+        self.image = pygame.image.load(SPRITE)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
         #Suggestions for variables:
         type = "interact eller dialogue"
         dialogue = ["dialogueID"]   #What dialogues are available.

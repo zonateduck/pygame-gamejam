@@ -1,5 +1,6 @@
 import pygame
 
+GRANDMA_SPRITE = "pygame-gamejam/assets/grandma.png"
 class BlomstObject():
     def __init__(self, ID, x, y):
         super().__init__()
@@ -16,7 +17,11 @@ class BlomstObject():
         dialogue = ["dialogueID"]   #What dialogues are available.
         flags = {}  #Dictionary for various flags
     
+        self.image = pygame.image.load(GRANDMA_SPRITE)
 
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
     def interact(self):
         pass
 
