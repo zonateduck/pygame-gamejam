@@ -1,12 +1,11 @@
 import pygame, sys, playerAnimation
-import os
+
+from assets import PLAYERSPRITE
 
 
 
-script_dir = os.path.dirname(__file__)  # the folder this script is in
-asset_path = os.path.join(script_dir, "..", "assets", "garfield.png")
 
-GARFIELD = asset_path
+GARFIELD = PLAYERSPRITE
 #TODO: remove
 
 
@@ -16,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
         self.PLAYER_SPEED = speed
-
+        self.size = (150, 100)
         #self.game = game
         
         self.playersprite = GARFIELD
@@ -43,6 +42,7 @@ class Player(pygame.sprite.Sprite):
         #self.image = self.game.player_sprite.get_sprite(0,0, self.width, self.height)
         #Placeholder garfield:
         self.image = pygame.image.load(GARFIELD)
+        self.image = pygame.transform.scale(self.image, self.size)
 
 
         #Sets hitbox to a rectangle x,y

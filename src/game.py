@@ -13,9 +13,18 @@ from Levels.StartScreen import StartScreen
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
+from Objects.TreeObject import TreeObject
+from Objects.GrandmaObject import Grandma
+from Objects.AppleObject import AppleObject
+
 from colorGrading import *
 
 from player import Player
+from map import Map
+
+# Dialogue handles
+from interactionsystem import draw_interaction_prompt
+
 
 
 # Initialize pygame
@@ -23,7 +32,7 @@ pygame.init()
 
 
 # Set up the window
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 GAME_BACKGROUND = BACKGROUND
@@ -41,7 +50,7 @@ FRAMERATE = 60
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
-    
+# Dialogues variables
 
 
 
@@ -50,13 +59,21 @@ x, y = 100, 100
 speed = 5
 size = 50
 
+dialogue_active = False
+
+
 player = Player(screen, x, y, speed)
+map = Map(screen)
 
 obj_range = 15   #How big a range the interaction-area has
 
-
+grandma = Grandma("GrandmaTest", 900, 700)
 objects = {
-    #"testobject01" : TestObject1()
+    # "objectID" : Objekt("mittobjekt1", x, y)
+    "testobject01" : TestObject1("testobject01", 200, 300),
+    "tree01" : TreeObject("Tree01", 200, 20),
+    "apple01" : AppleObject("Apple01", 300, 40),
+    "grandma" : grandma
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -74,6 +91,11 @@ test_screen2 = TestScreen2()
 
 current_state = test_start_screen
 
+
+from scene1 import Scene1
+test_scene = Scene1(screen)
+
+
 #This makes sure the game is not in two states at the same time :)
 def change_gamestate(new_state):
     global current_state
@@ -90,10 +112,8 @@ def change_gamestate(new_state):
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
 
-#Finds correct area to move to :)
-def find_adjacent_area(current_state, direction): 
-    areaID = current_state.get_adjacent_area(direction)
 
+def find_area(areaID):
     match areaID:
         case "test01" : 
             new_state = test_screen1
@@ -103,6 +123,12 @@ def find_adjacent_area(current_state, direction):
             print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
             new_state = current_state
     return new_state
+
+#Finds correct area to move to :)
+def find_adjacent_area(current_state, direction): 
+    areaID = current_state.get_adjacent_area(direction)
+    return find_area(areaID)
+
 
 def draw_world_objects():
     pass
@@ -119,6 +145,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_m:
+                map.toggle_map()
  
 
     TARGET_COLOR = 		(204,0,0)
@@ -170,45 +199,64 @@ while running:
         current_state.run(screen)
 
     #Logic for player going to new area :D
-    if x < 0 - transition_threshold:
+    if player.x < 0 - transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "LEFT"))
-        x = WIDTH
-    if x > WIDTH + transition_threshold:
+        player.x = WIDTH
+    if player.x > WIDTH + transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "RIGHT"))
-        x = 0
-    if y < - transition_threshold:
+        player.x = 0
+    if player.y < - transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "UP"))
-        y = HEIGHT
-    if y > HEIGHT + transition_threshold:
+        player.y = HEIGHT
+    if player.y > HEIGHT + transition_threshold:
         change_gamestate(find_adjacent_area(current_state, "DOWN"))
-        y = 0
+        player.y = 0
         
 
     # Draw "Player"
     #pygame.draw.rect(screen, BLUE, (x, y, size, size))
-    fake_player_interaction_rect = pygame.Rect(x - size/2, y - size/2, size + obj_range, size + obj_range)
+    fake_player_interaction_rect = pygame.Rect(player.x - size/2, player.y - size/2, size + obj_range, size + obj_range)
 
     screen.blit(player.image, player.rect)
     player.update()
-
+    screen.blit(grandma.image, grandma.rect)
 
     #   DRAW WORLD OBJECTS 
     #Draw world objects
     for obj in world_objects:
-        pygame.draw.rect(screen, obj.COLOR, (obj.x, obj.y, obj.size, obj.size))
+        screen.blit(obj.image, obj.rect)
+        #TODO: screen.blit(obj.image, obj.rect) to load the image
     
     for obj in world_objects:
-        if fake_player_interaction_rect.colliderect(obj.interaction_rect):
+        if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
             print("Can interact!")
-            #if player presses space:
-                # Code to handle interactin
+            #Show text: "Space to talk" (some sort of UI element)
+            draw_interaction_prompt(screen)
+            # Code to handle interaction 
+            if keys[pygame.K_SPACE]:
+                # Interaction depending on ID
+                if obj.ID == "GrandmaTest":
+                    obj.interact()
+                    dialogue_active = True
+                if obj.ID == "apple01":
+                    # pickup
+                    pass
+                # More interaction with other objects
+                
+                
+            
         else:
             print("Cant interact :3")
-
-    #   DRAW DIALOGUE BOXES:
+        
+        while dialogue_active == True:
+            test_scene.run()
+            dialogue_active = not test_scene.is_finished()
+    
+    
     
     #Draw the UI here
-
+    
+    map.run(screen, 600, 200)
 
     # Update display
     pygame.display.flip()
