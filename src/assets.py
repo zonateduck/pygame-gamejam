@@ -27,7 +27,7 @@ TREESPRITE = path + "/assets/tree.png"
 FRUITTREESPRITE = path + "/assets/tree with fruit.png"
 APPLESPRITE = path + "/assets/apple.png"
 GARFIELDSPRITE = path + "/assets/garfield.png"
-TUTORSPRITE = path + "/assets/tutor.png"
+TUTORSPRITE = path + "/assets/tu-tor.png"
 BIRDSPRITE = path + "/assets/bird.png"
 TWOBIRDSPRITE = path + "/assets/two birds.png"
 
