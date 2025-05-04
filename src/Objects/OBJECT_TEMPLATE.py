@@ -23,7 +23,10 @@ class TestObject1():
         type = "interact eller dialogue"
         dialogue = ["dialogueID"]   #What dialogues are available.
         flags = {}  #Dictionary for various flags
+        self.canInteract = False
     
+    def canInteract(self):
+        return self.canInteract
 
     def interact(self):
 

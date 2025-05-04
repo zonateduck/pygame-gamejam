@@ -13,8 +13,9 @@ from Levels.StartScreen import StartScreen
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
-from Objects.BlomstObject import BlomstObject
+from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
+from Objects.AppleObject import AppleObject
 
 from colorGrading import *
 
@@ -58,6 +59,9 @@ x, y = 100, 100
 speed = 5
 size = 50
 
+dialogue_active = False
+
+
 player = Player(screen, x, y, speed)
 map = Map(screen)
 
@@ -67,11 +71,8 @@ grandma = Grandma("GrandmaTest", 900, 700)
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
     "testobject01" : TestObject1("testobject01", 200, 300),
-    "blomst01" : BlomstObject("blomst01", 300, 400),
-    "blomst02" : BlomstObject("blomst02", 600, 600),
-    "blomst03" : BlomstObject("blomst03", 30, 500),
-    "blomst04" : BlomstObject("blomst04", 300, 800),
-    "blomst05" : BlomstObject("blomst05", 400, 60),
+    "tree01" : TreeObject("Tree01", 200, 20),
+    "apple01" : AppleObject("Apple01", 300, 40),
     "grandma" : grandma
 }
 
@@ -89,6 +90,11 @@ test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
 
 current_state = test_start_screen
+
+
+from scene1 import Scene1
+test_scene = Scene1(screen)
+
 
 #This makes sure the game is not in two states at the same time :)
 def change_gamestate(new_state):
@@ -222,20 +228,30 @@ while running:
         #TODO: screen.blit(obj.image, obj.rect) to load the image
     
     for obj in world_objects:
-        if fake_player_interaction_rect.colliderect(obj.interaction_rect):
+        if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
             print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
             draw_interaction_prompt(screen)
-            # Code to handle interaction
+            # Code to handle interaction 
             if keys[pygame.K_SPACE]:
-                obj.interact()
-                 #   DRAW DIALOGUE BOXES:
+                # Interaction depending on ID
+                if obj.ID == "GrandmaTest":
+                    obj.interact()
+                    dialogue_active = True
+                if obj.ID == "apple01":
+                    # pickup
+                    pass
+                # More interaction with other objects
                 
-
+                
+            
         else:
             print("Cant interact :3")
-
-   
+        
+        while dialogue_active == True:
+            test_scene.run()
+            dialogue_active = not test_scene.is_finished()
+    
     
     
     #Draw the UI here
