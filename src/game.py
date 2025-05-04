@@ -56,6 +56,7 @@ from Objects.CatObject import CatObject
 from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
+from Objects.HouseObject import HouseObject
 
 from colorGrading import *
 
@@ -115,7 +116,8 @@ obj_range = 15   #How big a range the interaction-area has
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
     "apple01" : AppleObject("Apple01", 300, 40),
-    "grandma" : Grandma("grandma", 600, 200),
+    "house" : HouseObject("house", 800, 150),
+    "grandma" : Grandma("grandma", 810, 330),
     "cat" : CatObject("cat", 1000, 100),
     "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
     "bird01" : BirdObject("bird01", 300, 100),
@@ -125,9 +127,9 @@ objects = {
     "tree02" : TreeObject("tree02", 800, 100),
     "tree03" : TreeObject("tree03", 200, 200),
     "tree04" : TreeObject("tree04", 700, 100),
-    "tree05" : TreeObject("tree05", 400, 600),
+    "tree05" : TreeObject("tree05", 200, 400),
     "tree06" : TreeObject("tree06", 100, 300),
-    "tree07" : TreeObject("tree07", 900, 400),
+    "tree07" : TreeObject("tree07", 900, 300),
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
