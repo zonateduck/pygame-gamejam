@@ -29,23 +29,6 @@ from Levels.AreaF4 import AreaF4
 from Levels.AreaF5 import AreaF5
 
 
-from Levels.AreaA1 import AreaA1
-from Levels.AreaA6 import AreaA6
-from Levels.AreaB1 import AreaB1
-from Levels.AreaB2 import AreaB2
-from Levels.AreaB3 import AreaB3
-from Levels.AreaB5 import AreaB5
-from Levels.AreaB6 import AreaB6
-from Levels.AreaC2 import AreaC2
-from Levels.AreaC3 import AreaC3
-from Levels.AreaC4 import AreaC4
-from Levels.AreaC5 import AreaC5
-from Levels.AreaD3 import AreaD3
-from Levels.AreaD4 import AreaD4
-from Levels.AreaE4 import AreaE4
-from Levels.AreaF4 import AreaF4
-from Levels.AreaF5 import AreaF5
-
 
 #Importing objects
 from Objects.TestObject1 import TestObject1
@@ -175,23 +158,8 @@ area_f4 = AreaF4()
 area_f5 = AreaF5()
 
 
-
-area_a1 = AreaA1()
-area_a6 = AreaA6()
-area_b1 = AreaB1()
-area_b2 = AreaB2()
-area_b3 = AreaB3()
-area_b5 = AreaB5()
-area_b6 = AreaB6()
-area_c2 = AreaC2()
-area_c3 = AreaC3()
-area_c4 = AreaC4()
-area_c5 = AreaC5()
-area_d3 = AreaD3()
-area_d4 = AreaD4()
-area_e4 = AreaE4()
-area_f4 = AreaF4()
-area_f5 = AreaF5()
+current_progress = "started" #started, searching, collected
+talked_to_grandma = False
 
 floors = [area_a1, area_a6, area_b1, area_b2, area_b3, area_b5, area_b6, area_c2, area_c3, area_c5, area_d3, area_d4, area_e4, area_f4, area_f5, area_c4]
 objects_to_remove_colors = objects.values()
@@ -201,22 +169,19 @@ default_area = area_c3 #Should be c3 in the end :)
 # DOESNT WORK
 
 from scene1 import Scene1
-from scene2 import Scene2
-#from scene3 import Scene3
-from scene4 import Scene4
-from scene5 import Scene5
-from scene6 import Scene6
-from scene7 import Scene7
-from scene8 import Scene8
-from scene9 import Scene9
+from scene1a import Scene1a
+from scene1b import Scene1b
 
 test_scene = Scene1(screen)
+test_scene1a = Scene1a(screen)
+test_scene1b = Scene1b(screen)
 
 
 #This makes sure the game is not in two states at the same time :)
 def change_gamestate(new_state):
     global current_state
     global world_borders
+    global current_progress
 
     if current_state != new_state:
         world_objects.clear()
@@ -230,6 +195,9 @@ def change_gamestate(new_state):
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
                 collidables.add(objects[objectID])
+                
+        if current_progress == "started" and talked_to_grandma:
+            current_progress = "searching"
 
 
 def find_area(areaID):
@@ -483,17 +451,31 @@ while running:
 
     while dialogue_active == True:
         print("should run")
-        test_scene.run()
-        dialogue_active = not test_scene.is_finished()
+        if current_progress == "started":
+            test_scene.run()
+            dialogue_active = not test_scene.is_finished()
+            talked_to_grandma = True
+        elif current_progress == "searching":
+            test_scene1a.run()
+            dialogue_active = not test_scene1a.is_finished()
+        elif current_progress == "collected":
+            test_scene1b.run()
+            dialogue_active = not test_scene1b.is_finished()
+        
+        if dialogue_active == False:
+            pygame.time.wait(200)
     
     
-    
+    test_scene.dialogue_index = 0
+    test_scene1a.dialogue_index = 0
+    test_scene1b.dialogue_index = 0
     #Draw the UI here
     
     map.run(screen, 600, 200)
 
     # Update display
     pygame.display.flip()
+
 
 # Clean up
 pygame.quit()
