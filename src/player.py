@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
         self.PLAYER_SPEED = speed
-        self.size = (150, 150)
+        self.size = (110, 110)
         #self.game = game
         
         self.playersprite = PLAYERSPRITE_DOWN

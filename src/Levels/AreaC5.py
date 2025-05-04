@@ -1,12 +1,12 @@
 import pygame
 
-from assets import BACKGROUND_03
-BACKGROUND = BACKGROUND_03
+from assets import BACKGROUND_02
+BACKGROUND = BACKGROUND_02
 
 class AreaC5:
     def __init__(self):
         self.areaID = "area_c5"
-        self.objects = [] #Which objects exist in this area?
+        self.objects = ["tree06"] #Which objects exist in this area?
         
         self.background = pygame.image.load(BACKGROUND)
         
