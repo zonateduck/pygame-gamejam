@@ -1,1 +1,0 @@
-""" Her deklareres konstanter som skal brukes gjennom spillet """

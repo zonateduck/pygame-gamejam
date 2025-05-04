@@ -3,7 +3,7 @@ import pygame
 from assets import TREESPRITE
 
 SPRITE = TREESPRITE
-class TreeObject():
+class TreeObject(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"

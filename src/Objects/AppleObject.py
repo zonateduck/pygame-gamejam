@@ -2,7 +2,7 @@ import pygame
 from assets import APPLESPRITE
 
 SPRITE = APPLESPRITE
-class AppleObject():
+class AppleObject(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
