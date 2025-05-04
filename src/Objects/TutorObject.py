@@ -28,7 +28,7 @@ class TutorObject(pygame.sprite.Sprite):
 
 
         # Handles interaction
-        self.canInteract = False
+        self.canInteract = True
     
     def canInteract(self):
         return self.canInteract

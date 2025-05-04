@@ -24,7 +24,7 @@ def draw_cat_interaction(screen, text="meow :3"):
     screen.blit(text_surface, text_rect)
 
 # called specifically when interacting with tu-tor
-def draw_tutor_interaction(screen, text="it's tu-tor!"):
+def draw_tutor_interaction(screen, text="it's tu-tor, from sonen!"):
     font = pygame.font.SysFont(None, 50)
     color = (255, 255, 255)
     bg_color = (0,0,0)

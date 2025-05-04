@@ -66,7 +66,7 @@ from map import Map
 
 # Dialogue handles
 from interactionsystem import draw_interaction_prompt
-
+from creaturesinteraction import draw_cat_interaction, draw_tutor_interaction
 
 
 # Initialize pygame
@@ -454,6 +454,10 @@ while running:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
             #print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
+            if obj.ID == "cat":
+                draw_cat_interaction
+            if obj.ID == "tutor":
+                draw_tutor_interaction
             draw_interaction_prompt(screen)
             # Code to handle interaction 
             if keys[pygame.K_SPACE]:
