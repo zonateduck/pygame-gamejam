@@ -1,7 +1,7 @@
 import pygame
 
 
-SPRITE = "pygame-gamejam/assets/houseplaceholder.png"
+SPRITE = "../assets/houseplaceholder.png"
 
 class TestObject1():
     def __init__(self, ID, x, y):

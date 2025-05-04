@@ -1,12 +1,5 @@
 import pygame, sys, playerAnimation
 
-from assets import PLAYERSPRITE_UP
-from assets import PLAYERSPRITE_LEFT
-from assets import PLAYERSPRITE_RIGHT
-from assets import PLAYERSPRITE_DOWN
-
-
-
 #TODO: remove
 
 
@@ -16,10 +9,11 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
         self.PLAYER_SPEED = speed
-        self.size = (150, 150)
+
         #self.game = game
         
-        self.playersprite = PLAYERSPRITE_DOWN
+        self.playersprite = "./assets/garfield.png"
+
 
         #self.groups = self.game.all_sprites
         #pygame.sprite.Sprite.__init__(self, self.groups)
@@ -42,8 +36,7 @@ class Player(pygame.sprite.Sprite):
         #Cuts out the sprite from the first position of the spritesheet
         #self.image = self.game.player_sprite.get_sprite(0,0, self.width, self.height)
         #Placeholder garfield:
-        self.image = pygame.image.load(self.playersprite)
-        self.image = pygame.transform.scale(self.image, self.size)
+        self.image = pygame.image.load("./assets/garfield.png")
 
 
         #Sets hitbox to a rectangle x,y
@@ -91,20 +84,12 @@ class Player(pygame.sprite.Sprite):
         #self.move()
         #self.animate()
 
-        if self.facing == "right":
-            print("moving right")
-            self.playersprite = PLAYERSPRITE_RIGHT
-        if self.facing == "left":
-            self.playersprite = PLAYERSPRITE_LEFT
-        if self.facing == "down":
-            self.playersprite = PLAYERSPRITE_DOWN
-        if self.facing == "up":
-            self.playersprite = PLAYERSPRITE_UP  
-            
         self.rect.x = self.x
         self.rect.y = self.y
 
         #self.x_change = 0
         #self.y_change = 0
-        self.image = pygame.image.load(self.playersprite)
-        self.image = pygame.transform.scale(self.image, self.size)
+
+    
+    def animate(self):
+        Player_animation_animate(self)

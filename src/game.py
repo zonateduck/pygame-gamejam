@@ -178,7 +178,7 @@ while running:
     if keys[pygame.K_1]: #DEBUG BUTTON
         background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
-
+    player.update()
     #Draw background
     screen.blit(background, (0, 0))
 
