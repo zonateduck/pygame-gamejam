@@ -36,6 +36,7 @@ class Scene1:
         return self.finished
     
     def run(self):
+
         # Draw dialogue box
         if self.dialogue_index < len(self.dialogue):
             self.draw_text_box(self.dialogue[self.dialogue_index])
@@ -48,10 +49,14 @@ class Scene1:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+            
             # Advance dialogue on spacebar press
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and self.dialogue_index < len(self.dialogue):
                     self.dialogue_index += 1
+                    # If player reads to fast and wants to reset
+                if event.key == pygame.K_r:
+                    self.dialogue_index = 0
+                    self.finished = False
 
         pygame.display.flip()

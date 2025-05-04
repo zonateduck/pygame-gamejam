@@ -1,10 +1,7 @@
 import pygame
-import os
+from assets import GRANDMASPRITE
 
-
-script_dir = os.path.dirname(__file__)  # the folder this script is in
-asset_path = os.path.join(script_dir, "..", "assets", "grandma.png")
-GRANDMA_SPRITE = "pygame-gamejam/assets/grandma.png"
+SPRITE = GRANDMASPRITE
 
 class Grandma():
     def __init__(self, ID, x, y):
@@ -17,9 +14,10 @@ class Grandma():
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         self.dialoguesToPlay = 0
-        self.grandmasprite = GRANDMA_SPRITE
+        self.grandmasprite = SPRITE
 
-        self.image = pygame.image.load(GRANDMA_SPRITE)
+        self.image = pygame.image.load(SPRITE)
+        self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x
@@ -29,7 +27,11 @@ class Grandma():
         type = "interact eller dialogue"
         dialogue = ["dialogueID"]   #What dialogues are available.
         flags = {}  #Dictionary for various flags
-    
+
+        self.canInteract = True
+
+    def canInteract(self):
+        return self.canInteract
 
     def interact(self):
 
