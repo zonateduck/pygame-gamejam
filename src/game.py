@@ -11,6 +11,22 @@ from Levels.TestScreen1 import TestScreen1
 from Levels.TestScreen2 import TestScreen2
 from Levels.StartScreen import StartScreen
 
+from Levels.AreaA1 import AreaA1
+from Levels.AreaA6 import AreaA6
+from Levels.AreaB1 import AreaB1
+from Levels.AreaB2 import AreaB2
+from Levels.AreaB3 import AreaB3
+from Levels.AreaB5 import AreaB5
+from Levels.AreaB6 import AreaB6
+from Levels.AreaC2 import AreaC2
+from Levels.AreaC3 import AreaC3
+from Levels.AreaC4 import AreaC4
+from Levels.AreaC5 import AreaC5
+from Levels.AreaD3 import AreaD3
+from Levels.AreaD4 import AreaD4
+from Levels.AreaE4 import AreaE4
+from Levels.AreaF4 import AreaF4
+from Levels.AreaF5 import AreaF5
 
 
 from Levels.AreaA1 import AreaA1
@@ -40,6 +56,7 @@ from Objects.CatObject import CatObject
 from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
+from Objects.HouseObject import HouseObject
 
 from colorGrading import *
 
@@ -98,20 +115,21 @@ obj_range = 15   #How big a range the interaction-area has
 
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
-    "apple01" : AppleObject("Apple01", 300, 340),
-    "grandma" : Grandma("grandma", 600, 200),
-    "cat" : CatObject("cat", 1000, 300),
+    "apple01" : AppleObject("Apple01", 300, 40),
+    "house" : HouseObject("house", 800, 150),
+    "grandma" : Grandma("grandma", 810, 330),
+    "cat" : CatObject("cat", 1000, 100),
     "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
-    "bird01" : BirdObject("bird01", 300, 300),
-    "bird02" : BirdObject("bird01", 200, 400),
+    "bird01" : BirdObject("bird01", 300, 100),
+    "bird02" : BirdObject("bird01", 20, 400),
     "twobirds01" : Bird2Object("twobirds01", 930, 300),
-    "tree01" : TreeObject("tree01", 300, 200),
-    "tree02" : TreeObject("tree02", 800, 200),
+    "tree01" : TreeObject("tree01", 200, 20),
+    "tree02" : TreeObject("tree02", 800, 100),
     "tree03" : TreeObject("tree03", 200, 200),
     "tree04" : TreeObject("tree04", 700, 100),
-    "tree05" : TreeObject("tree05", 400, 500),
-    "tree06" : TreeObject("tree06", 300, 300),
-    "tree07" : TreeObject("tree07", 900, 400),
+    "tree05" : TreeObject("tree05", 200, 400),
+    "tree06" : TreeObject("tree06", 100, 300),
+    "tree07" : TreeObject("tree07", 900, 300),
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -128,6 +146,23 @@ transition_threshold = 5    #How many pixels off-screen before transition
 test_start_screen = StartScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
+
+area_a1 = AreaA1()
+area_a6 = AreaA6()
+area_b1 = AreaB1()
+area_b2 = AreaB2()
+area_b3 = AreaB3()
+area_b5 = AreaB5()
+area_b6 = AreaB6()
+area_c2 = AreaC2()
+area_c3 = AreaC3()
+area_c4 = AreaC4()
+area_c5 = AreaC5()
+area_d3 = AreaD3()
+area_d4 = AreaD4()
+area_e4 = AreaE4()
+area_f4 = AreaF4()
+area_f5 = AreaF5()
 
 
 area_a1 = AreaA1()
@@ -286,7 +321,7 @@ while running:
                 map.toggle_map()
  
 
-    TARGET_COLOR = 		(143, 208, 50)
+    TARGET_COLOR = 		(204,0,0)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
 #Verdi å gange med for å få diagonal hastighet til å være lik straight:
@@ -363,12 +398,8 @@ while running:
             player.facing = "down"
             if player.can_move_to(dx, dy, collidables):
                 player.y += dy 
-
-   
-
     if keys[pygame.K_1]: #DEBUG BUTTON
-        # Color removal handler
-        current_state.background = remove_color(find_area(current_state).background.copy(), TARGET_COLOR, (170, 170, 170))
+        background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
     player.update()
     #Draw background
@@ -425,10 +456,9 @@ while running:
             # Code to handle interaction 
             if keys[pygame.K_SPACE]:
                 # Interaction depending on ID
-                if obj.ID == "grandma":
+                if obj.ID == "GrandmaTest":
                     obj.interact()
                     dialogue_active = True
-                    print(dialogue_active)
                 if obj.ID == "apple01":
                     # pickup
                     pass
