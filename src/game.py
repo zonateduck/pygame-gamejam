@@ -11,11 +11,35 @@ from Levels.TestScreen1 import TestScreen1
 from Levels.TestScreen2 import TestScreen2
 from Levels.StartScreen import StartScreen
 
+
+
+from Levels.AreaA1 import AreaA1
+from Levels.AreaA6 import AreaA6
+from Levels.AreaB1 import AreaB1
+from Levels.AreaB2 import AreaB2
+from Levels.AreaB3 import AreaB3
+from Levels.AreaB5 import AreaB5
+from Levels.AreaB6 import AreaB6
+from Levels.AreaC2 import AreaC2
+from Levels.AreaC3 import AreaC3
+from Levels.AreaC4 import AreaC4
+from Levels.AreaC5 import AreaC5
+from Levels.AreaD3 import AreaD3
+from Levels.AreaD4 import AreaD4
+from Levels.AreaE4 import AreaE4
+from Levels.AreaF4 import AreaF4
+from Levels.AreaF5 import AreaF5
+
+
 #Importing objects
 from Objects.TestObject1 import TestObject1
 from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
 from Objects.AppleObject import AppleObject
+from Objects.CatObject import CatObject
+from Objects.TreeFruitObject import TreeFruitObject
+from Objects.BirdObject import BirdObject
+from Objects.Bird2Object import Bird2Object
 
 from colorGrading import *
 
@@ -50,13 +74,16 @@ FRAMERATE = 60
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
+#Creates a group for collidable objects    
+collidables = pygame.sprite.Group()
+
 # Dialogues variables
 
 
 
 # Game variables
 x, y = 100, 100
-speed = 5
+speed = 8
 size = 50
 
 dialogue_active = False
@@ -67,13 +94,24 @@ map = Map(screen)
 
 obj_range = 15   #How big a range the interaction-area has
 
-grandma = Grandma("GrandmaTest", 900, 700)
+#grandma = Grandma("GrandmaTest", 900, 700)
+
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
-    "testobject01" : TestObject1("testobject01", 200, 300),
-    "tree01" : TreeObject("Tree01", 200, 20),
-    "apple01" : AppleObject("Apple01", 300, 40),
-    "grandma" : grandma
+    "apple01" : AppleObject("Apple01", 300, 340),
+    "grandma" : Grandma("grandma", 600, 200),
+    "cat" : CatObject("cat", 1000, 300),
+    "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
+    "bird01" : BirdObject("bird01", 300, 300),
+    "bird02" : BirdObject("bird01", 200, 400),
+    "twobirds01" : Bird2Object("twobirds01", 930, 300),
+    "tree01" : TreeObject("tree01", 300, 200),
+    "tree02" : TreeObject("tree02", 800, 200),
+    "tree03" : TreeObject("tree03", 200, 200),
+    "tree04" : TreeObject("tree04", 700, 100),
+    "tree05" : TreeObject("tree05", 400, 500),
+    "tree06" : TreeObject("tree06", 300, 300),
+    "tree07" : TreeObject("tree07", 900, 400),
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -85,16 +123,39 @@ world_borders = []  #Updates based on current_state.get_borders()
 transition_threshold = 5    #How many pixels off-screen before transition
 
 #GameState manager
+#Instantiate EVERYTHING
+#Instantiate EVERYTHING
 test_start_screen = StartScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
 
-current_state = test_start_screen
 
+area_a1 = AreaA1()
+area_a6 = AreaA6()
+area_b1 = AreaB1()
+area_b2 = AreaB2()
+area_b3 = AreaB3()
+area_b5 = AreaB5()
+area_b6 = AreaB6()
+area_c2 = AreaC2()
+area_c3 = AreaC3()
+area_c4 = AreaC4()
+area_c5 = AreaC5()
+area_d3 = AreaD3()
+area_d4 = AreaD4()
+area_e4 = AreaE4()
+area_f4 = AreaF4()
+area_f5 = AreaF5()
+
+
+current_state = test_start_screen
+default_area = area_c3 #Should be c3 in the end :)
+
+# DOESNT WORK
 
 from scene1 import Scene1
 from scene2 import Scene2
-from scene3 import Scene3
+#from scene3 import Scene3
 from scene4 import Scene4
 from scene5 import Scene5
 from scene6 import Scene6
@@ -102,7 +163,7 @@ from scene7 import Scene7
 from scene8 import Scene8
 from scene9 import Scene9
 
-test_scene = Scene4(screen)
+test_scene = Scene1(screen)
 
 
 #This makes sure the game is not in two states at the same time :)
@@ -113,6 +174,7 @@ def change_gamestate(new_state):
     if current_state != new_state:
         world_objects.clear()
         world_borders.clear()
+        collidables.empty()
         current_state = new_state
         
         #Update borders and objects:
@@ -120,6 +182,7 @@ def change_gamestate(new_state):
         for objectID in current_state.get_objects():
             if objectID in objects.keys():
                 world_objects.append(objects[objectID])
+                collidables.add(objects[objectID])
 
 
 def find_area(areaID):
@@ -128,9 +191,73 @@ def find_area(areaID):
             new_state = test_screen1
         case "test02" : 
             new_state = test_screen2
+        case "area_a1" : 
+            new_state = area_a1
+        case "area_a6" : 
+            new_state = area_a6
+        case "area_b1" : 
+            new_state = area_b1
+        case "area_b2" : 
+            new_state = area_b2
+        case "area_b3" : 
+            new_state = area_b3
+        case "area_b5" : 
+            new_state = area_b5
+        case "area_b6" : 
+            new_state = area_b6
+        case "area_c2" : 
+            new_state = area_c2
+        case "area_c3" : 
+            new_state = area_c3
+        case "area_c4" : 
+            new_state = area_c4
+        case "area_c5" : 
+            new_state = area_c5
+        case "area_d3" : 
+            new_state = area_d3
+        case "area_d4" : 
+            new_state = area_d4
+        case "area_e4" : 
+            new_state = area_e4
+        case "area_f4" : 
+            new_state = area_f4
+        case "area_f5" : 
+            new_state = area_f5
+        case "area_a1" : 
+            new_state = area_a1
+        case "area_a6" : 
+            new_state = area_a6
+        case "area_b1" : 
+            new_state = area_b1
+        case "area_b2" : 
+            new_state = area_b2
+        case "area_b3" : 
+            new_state = area_b3
+        case "area_b5" : 
+            new_state = area_b5
+        case "area_b6" : 
+            new_state = area_b6
+        case "area_c2" : 
+            new_state = area_c2
+        case "area_c3" : 
+            new_state = area_c3
+        case "area_c4" : 
+            new_state = area_c4
+        case "area_c5" : 
+            new_state = area_c5
+        case "area_d3" : 
+            new_state = area_d3
+        case "area_d4" : 
+            new_state = area_d4
+        case "area_e4" : 
+            new_state = area_e4
+        case "area_f4" : 
+            new_state = area_f4
+        case "area_f5" : 
+            new_state = area_f5
         case _: #If areaID did not match
-            print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
-            new_state = current_state
+            #print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
+            new_state = default_area
     return new_state
 
 #Finds correct area to move to :)
@@ -159,35 +286,91 @@ while running:
                 map.toggle_map()
  
 
-    TARGET_COLOR = 		(204,0,0)
+    TARGET_COLOR = 		(143, 208, 50)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
+#Verdi å gange med for å få diagonal hastighet til å være lik straight:
+    v = 0.7071067811865476
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_a]:
+    dx, dy = 0,0
+#Diagonal keybinds
+
+    if keys[pygame.K_a] and keys[pygame.K_w]:
+        if not (x < 0 and ("LEFT" in world_borders or "UP" in world_borders)):
+            #background = convert_to_black_and_white(background.copy())
+            dx = - (speed * v)
+            dy = - (speed * v)
+            player.facing = "up_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_d] and keys[pygame.K_w]:
+        if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "UP" in world_borders)):
+            #background = remove_blue_channel(background.copy())
+            dx += (speed * v)
+            dy -= (speed * v)
+            player.facing = "up_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_a] and keys[pygame.K_s]:
+        if not (x < 0 and ("LEFT" in world_borders or "DOWN" in world_borders)):
+            #background = convert_to_black_and_white(background.copy())
+            dx -= (speed * v)
+            dy += (speed * v)
+            player.facing = "down_left"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+    elif keys[pygame.K_d] and keys[pygame.K_s]:
+        if not (x > (WIDTH - size) and ("RIGHT" in world_borders or "DOWN" in world_borders)):
+            #background = remove_blue_channel(background.copy())
+            dx += (speed * v)
+            dy += (speed * v)
+            player.facing = "down_right"
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+                player.y += dy 
+
+
+#Straight keybinds:
+    elif keys[pygame.K_a]:
         if not (x < 0 and "LEFT" in world_borders):
             #background = convert_to_black_and_white(background.copy())
-            player.x -= speed
+            dx -= speed
             player.facing = "left"
-    if keys[pygame.K_d]:
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+    elif keys[pygame.K_d]:
         if not (x > (WIDTH - size) and "RIGHT" in world_borders):
             #background = remove_blue_channel(background.copy())
-            player.x += speed
+            dx += speed
             player.facing = "right"
-    if keys[pygame.K_w]:
+            if player.can_move_to(dx, dy, collidables):
+                player.x += dx
+    elif keys[pygame.K_w]:
         if not (y < 0 and "UP" in world_borders):
             #background = remove_red_channel(background.copy())
-            player.y -= speed
+            dy -= speed
             player.facing = "up"
-    if keys[pygame.K_s]:
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
+    elif keys[pygame.K_s]:
         if not (y > (HEIGHT - size) and "DOWN" in world_borders):
             #background = remove_green_channel(background.copy())
-            player.y += speed
+            dy += speed
             player.facing = "down"
+            if player.can_move_to(dx, dy, collidables):
+                player.y += dy 
+
+   
+
     if keys[pygame.K_1]: #DEBUG BUTTON
-        background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
+        # Color removal handler
+        current_state.background = remove_color(find_area(current_state).background.copy(), TARGET_COLOR, (170, 170, 170))
 
-
+    player.update()
     #Draw background
     screen.blit(background, (0, 0))
 
@@ -200,12 +383,10 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print("pressed space")
-                    change_gamestate(test_screen1)
+                    change_gamestate(default_area)
 
-    if current_state == test_screen1:
-        current_state.run(screen) #This makes the current_scene display and do its stuff!
-    if current_state == test_screen2:
-        current_state.run(screen)
+    current_state.run(screen)
+        
 
     #Logic for player going to new area :D
     if player.x < 0 - transition_threshold:
@@ -228,7 +409,7 @@ while running:
 
     screen.blit(player.image, player.rect)
     player.update()
-    screen.blit(grandma.image, grandma.rect)
+    #screen.blit(grandma.image, grandma.rect)
 
     #   DRAW WORLD OBJECTS 
     #Draw world objects
@@ -238,15 +419,16 @@ while running:
     
     for obj in world_objects:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
-            print("Can interact!")
+            #print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
             draw_interaction_prompt(screen)
             # Code to handle interaction 
             if keys[pygame.K_SPACE]:
                 # Interaction depending on ID
-                if obj.ID == "GrandmaTest":
+                if obj.ID == "grandma":
                     obj.interact()
                     dialogue_active = True
+                    print(dialogue_active)
                 if obj.ID == "apple01":
                     # pickup
                     pass
@@ -254,8 +436,8 @@ while running:
                 
                 
             
-        else:
-            print("Cant interact :3")
+        #else:
+            #print("Cant interact :3")
         
         while dialogue_active == True:
             test_scene.run()

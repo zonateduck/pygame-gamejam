@@ -1,150 +1,161 @@
 import pygame
 import sys
 
-from assets import GRANDMA
-from assets import IRIS
-from assets import BACKGROUND
-
-# Image paths (replace with actual file paths)
-GRANDMAPORTRAIT = GRANDMA  # Replace with the actual path
-IRISPORTRAIT = IRIS  # Replace with the actual path
-BACKGROUND1 = BACKGROUND
+# Initialize pygame
+pygame.init()
 
 # Screen settings
-class Scene3:
-    def __init__(self, screen):
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = screen.get_size()
-        self.FONT = pygame.font.SysFont("lucida console", 24)
-        self.TEXT_COLOR = (255, 255, 255)
-        self.BOX_COLOR = (0, 0, 0)
-        self.BOX_PADDING = 20
-        self.finished = True
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Meowgical Visual Novel")
 
-        # Dialogue content
-        self.dialogue = [
+# Fonts
+FONT = pygame.font.SysFont("lucida console", 24)
+TEXT_COLOR = (255, 255, 255)
+BOX_COLOR = (0, 0, 0)
+BOX_PADDING = 20
+
+# Dialogue content and who is speaking (left or right)
+# Dialogue content and who is speaking (left or right)
+dialogue = [
     "Iris, honey... I am planning to make apple cake. We will need the reddest of apples!",
     "I'll get them in the garden!"
 ]
 
-        self.speakers = [
+speakers = [
+    "Granny",
+    "Iris"
+    "Iris, honey... I am planning to make apple cake. We will need the reddest of apples!",
+    "I'll get them in the garden!"
+]
+
+speakers = [
     "Granny",
     "Iris"
 ]
-        self.dialogue_index = 0
-        self.screen = screen  # Keep track of the screen passed from main
 
-        # Portrait size and position logic
-        self.PORTRAIT_WIDTH = 120
-        self.PORTRAIT_HEIGHT = 160
+# Portrait size and position logic
+PORTRAIT_WIDTH = 120
+PORTRAIT_HEIGHT = 160
+PORTRAIT_COLOR = (255, 182, 193) 
 
-        # Load portraits
-        self.granny_portrait = pygame.image.load(GRANDMAPORTRAIT)
-        self.iris_portrait = pygame.image.load(IRISPORTRAIT)
-        
-        # Scale portraits if necessary
-        self.granny_portrait = pygame.transform.scale(self.granny_portrait, (self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT))
-        self.iris_portrait = pygame.transform.scale(self.iris_portrait, (self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT))
+def draw_portrait(position):
+    if position == "left":
+        rect = pygame.Rect(50, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
+    elif position == "right":
+        rect = pygame.Rect(SCREEN_WIDTH - 50 - PORTRAIT_WIDTH, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
+    pygame.draw.rect(screen, PORTRAIT_COLOR, rect)
 
+# Function to wrap and render long text
+def wrap_text(text, font, max_width):
+    words = text.split(" ")
+    lines = []
+    current_line = ""
 
-        # Test
-        self.background = pygame.image.load(BACKGROUND1).convert()
-        self.background = pygame.transform.scale(self.background, (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-
-       
-    def clear_portrait_area(self):
-        self.portrait_y = self.SCREEN_HEIGHT - 170 - self.PORTRAIT_HEIGHT
-
-        # Clear left portrait area by redrawing the background portion
-        if hasattr(self, 'background'):
-            iris_rect = pygame.Rect(50, self.portrait_y, self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT)
-            self.screen.blit(self.background, iris_rect.topleft, iris_rect)
-            
-            granny_rect = pygame.Rect(self.SCREEN_WIDTH - 50 - self.PORTRAIT_WIDTH, self.portrait_y, self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT)
-            self.screen.blit(self.background, granny_rect.topleft, granny_rect)
+    for word in words:
+        test_line = current_line + word + " "
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
         else:
-            # If no background image, use background color
-            bg_color = (100, 100, 255)  # Or whatever your default background color is
-            iris_rect = pygame.Rect(50, self.portrait_y, self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT)
-            pygame.draw.rect(self.screen, bg_color, iris_rect)
-
-            granny_rect = pygame.Rect(self.SCREEN_WIDTH - 50 - self.PORTRAIT_WIDTH, self.portrait_y, self.PORTRAIT_WIDTH, self.PORTRAIT_HEIGHT)
-            pygame.draw.rect(self.screen, bg_color, granny_rect)
-
-
-    def draw_portrait(self, position):
-        """Draw the portrait of the speaker based on position."""
-        self.clear_portrait_area()  # First, clear both portrait areas
-        self.portrait_y = self.SCREEN_HEIGHT - 170 - self.PORTRAIT_HEIGHT
-        # Draw the new portrait based on the position of the speaker
-        if position == "left":
-            self.screen.blit(self.iris_portrait, (50, self.portrait_y))  # Draw Iris's portrait on the left
-        elif position == "right":
-            self.screen.blit(self.granny_portrait, (self.SCREEN_WIDTH - 50 - self.PORTRAIT_WIDTH, self.portrait_y))  # Draw Granny's portrait on the right
-
-    # Function to wrap and render long text
-    def wrap_text(self, text, font, max_width):
-        words = text.split(" ")
-        lines = []
-        current_line = ""
-
-        for word in words:
-            test_line = current_line + word + " "
-            if font.size(test_line)[0] <= max_width:
-                current_line = test_line
-            else:
-                lines.append(current_line.strip())
-                current_line = word + " "
-        
-        if current_line:
             lines.append(current_line.strip())
-        return lines
-
-    # Function to draw text box and current dialogue
-    def draw_text_box(self, text):
-        box_rect = pygame.Rect(50, self.SCREEN_HEIGHT - 150, self.SCREEN_WIDTH - 100, 100)
-        pygame.draw.rect(self.screen, self.BOX_COLOR, box_rect)
-
-        lines = self.wrap_text(text, self.FONT, box_rect.width - 2 * self.BOX_PADDING)
-
-        y_offset = 0
-        for line in lines:
-            rendered_text = self.FONT.render(line, True, self.TEXT_COLOR)
-            self.screen.blit(rendered_text, (box_rect.x + self.BOX_PADDING, box_rect.y + self.BOX_PADDING + y_offset))
-            y_offset += self.FONT.get_linesize()
-
-    # Game loop
-    def is_finished(self):
-        return self.finished
+            current_line = word + " "
     
-    def run(self):
-        # Draw dialogue box and portrait only, leaving the background untouched
-        if self.dialogue_index < len(self.dialogue):
-            text = self.dialogue[self.dialogue_index]
-            speaker = self.speakers[self.dialogue_index]  
-            
-            if speaker == "Iris":
-                self.draw_portrait("left")  # Draw Iris's portrait on the left side
-            elif speaker == "Granny":
-                self.draw_portrait("right")  # Draw Granny's portrait on the right side
+    if current_line:
+        lines.append(current_line.strip())
+    return lines
 
-            self.draw_text_box(text)
-            self.finished = False
+# Portrait size and position logic
+PORTRAIT_WIDTH = 120
+PORTRAIT_HEIGHT = 160
+PORTRAIT_COLOR = (255, 182, 193) 
+
+def draw_portrait(position):
+    if position == "left":
+        rect = pygame.Rect(50, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
+    elif position == "right":
+        rect = pygame.Rect(SCREEN_WIDTH - 50 - PORTRAIT_WIDTH, 300, PORTRAIT_WIDTH, PORTRAIT_HEIGHT)
+    pygame.draw.rect(screen, PORTRAIT_COLOR, rect)
+
+# Function to wrap and render long text
+def wrap_text(text, font, max_width):
+    words = text.split(" ")
+    lines = []
+    current_line = ""
+
+    for word in words:
+        test_line = current_line + word + " "
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
         else:
-            self.draw_text_box("The End. Thanks for playing!")
-            self.finished = True
+            lines.append(current_line.strip())
+            current_line = word + " "
+    
+    if current_line:
+        lines.append(current_line.strip())
+    return lines
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+# Function to draw text box and current dialogue
+def draw_text_box(text):
+    box_rect = pygame.Rect(50, SCREEN_HEIGHT - 150, SCREEN_WIDTH - 100, 100)
+    pygame.draw.rect(screen, BOX_COLOR, box_rect)
 
-            # Advance dialogue on spacebar press
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and self.dialogue_index < len(self.dialogue):
-                    self.dialogue_index += 1
-                # If player reads too fast and wants to reset
-                if event.key == pygame.K_r:
-                    self.dialogue_index = 0
-                    self.finished = False
+    lines = wrap_text(text, FONT, box_rect.width - 2 * BOX_PADDING)
 
-        pygame.display.flip()
+    y_offset = 0
+    for line in lines:
+        rendered_text = FONT.render(line, True, TEXT_COLOR)
+        screen.blit(rendered_text, (box_rect.x + BOX_PADDING, box_rect.y + BOX_PADDING + y_offset))
+        y_offset += FONT.get_linesize()
+
+    lines = wrap_text(text, FONT, box_rect.width - 2 * BOX_PADDING)
+
+    y_offset = 0
+    for line in lines:
+        rendered_text = FONT.render(line, True, TEXT_COLOR)
+        screen.blit(rendered_text, (box_rect.x + BOX_PADDING, box_rect.y + BOX_PADDING + y_offset))
+        y_offset += FONT.get_linesize()
+
+# Game loop
+clock = pygame.time.Clock()
+dialogue_index = 0
+dialogue_index = 0
+running = True
+while running:
+    screen.fill((100, 100, 255))  # Background color
+
+    if dialogue_index < len(dialogue):
+        text = dialogue[dialogue_index]
+        speaker = speakers[dialogue_index]
+
+        if speaker == "Iris":
+            draw_portrait("left")
+        else:
+            draw_portrait("right")
+
+        draw_text_box(text)
+        text = dialogue[dialogue_index]
+        speaker = speakers[dialogue_index]
+
+        if speaker == "Iris":
+            draw_portrait("left")
+        else:
+            draw_portrait("right")
+
+        draw_text_box(text)
+    else:
+        draw_text_box("The End. Thanks for playing!")
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and dialogue_index < len(dialogue):
+                dialogue_index += 1
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()

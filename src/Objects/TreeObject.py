@@ -3,21 +3,20 @@ import pygame
 from assets import TREESPRITE
 
 SPRITE = TREESPRITE
-class TreeObject():
+class TreeObject(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
         self.COLOR = (255, 255, 0)
-        self.size = 120
+        self.size = 240
         self.x = x
         self.y = y
-        self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
+        self.collision_rect = pygame.Rect(self.x + self.size / 2, self.y  + self.size / 2, self.size / 3, self.size / 2)
         self.interaction_rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size * 1.5, self.size * 1.5)
         
 
         self.image = pygame.image.load(SPRITE)
-        self.size = (50, 50)
-        self.image = pygame.transform.scale(self.image, self.size)
+        self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x
