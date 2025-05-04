@@ -43,6 +43,13 @@ BACKGROUND_B2 = path + "/assets/background_basic2.png"
 BACKGROUND_B3 = path + "/assets/background_basic3.png"
 BACKGROUND_05 = path + "/assets/background5.png"
 
+LAKESPRITE01 = path + "/assets/lake_1_big_part.png"
+LAKESPRITE02 = path + "/assets/lake_1_small_area.png"
+LAKESPRITE03 = path + "/assets/lake_2_big_area.png"
+LAKESPRITE04 = path + "/assets/lake_2_small_area.png"
+
+
+
 
 HOUSESPRITE = path + "/assets/house.png"
 GRANDMA = path + "/assets/grandma portrait.png"

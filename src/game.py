@@ -57,6 +57,10 @@ from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
 from Objects.HouseObject import HouseObject
+from Objects.LakeObject1 import LakeObject1
+from Objects.LakeObject2 import LakeObject2
+from Objects.LakeObject3 import LakeObject3
+from Objects.LakeObject4 import LakeObject4
 
 from colorGrading import *
 
@@ -130,6 +134,10 @@ objects = {
     "tree05" : TreeObject("tree05", 200, 400),
     "tree06" : TreeObject("tree06", 100, 300),
     "tree07" : TreeObject("tree07", 900, 300),
+    "lake01" : LakeObject1("lake01", 630, 290),
+    "lake02" : LakeObject2("lake02", 1100, 220),
+    "lake03" : LakeObject3("lake03", 0, 370),
+    "lake04" : LakeObject4("lake04", 0, 220),
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -184,7 +192,7 @@ area_f5 = AreaF5()
 
 
 current_state = test_start_screen
-default_area = area_c3 #Should be c3 in the end :)
+default_area = area_f5 #Should be c3 in the end :)
 
 # DOESNT WORK
 
