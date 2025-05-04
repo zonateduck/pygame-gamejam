@@ -17,7 +17,7 @@ def convert_to_black_and_white(image):
 
 # This function takes an image(Surface), and returns an imaage with the removedColor
 # Buth replacement_color and target_color are RGB values(R,G,B)
-def remove_color(image, target_color, replacement_color=(0,0,0), acceptedRange= 2) -> pygame.Surface:
+def remove_color(image, target_color, replacement_color=(0,0,0), acceptedRange= 100) -> pygame.Surface:
     
     def color_distance(c1, c2):
         return sum((a - b) ** 2 for a, b in zip(c1, c2)) ** 0.5

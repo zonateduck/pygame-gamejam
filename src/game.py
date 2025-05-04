@@ -167,6 +167,7 @@ area_f4 = AreaF4()
 area_f5 = AreaF5()
 
 floors = [area_a1, area_a6, area_b1, area_b2, area_b3, area_b5, area_b6, area_c2, area_c3, area_c5, area_d3, area_d4, area_e4, area_f4, area_f5, area_c4]
+objects_to_remove_colors = objects.values()
 current_state = test_start_screen
 default_area = area_c3 #Should be c3 in the end :)
 
@@ -305,7 +306,7 @@ while running:
                 map.toggle_map()
  
 
-    TARGET_COLOR = 		(143 ,208 ,50)
+    TARGET_COLOR = 	(241,100,31)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
 #Verdi å gange med for å få diagonal hastighet til å være lik straight:
@@ -382,11 +383,13 @@ while running:
             player.facing = "down"
             if player.can_move_to(dx, dy, collidables):
                 player.y += dy 
-    if keys[pygame.K_1]: #DEBUG BUTTON
-        #for floor in 
+                
+    if keys[pygame.K_1]: # THIS HANDLES THE REMOVAL OF COLORS FROM EVERYTHING
         for floor in floors:
-            floor.background = 
-        current_state.background = remove_color(current_state.background.copy(), TARGET_COLOR, (160, 160, 160))
+            floor.background = remove_color(floor.background.copy(), TARGET_COLOR, (160, 160, 160))
+        for object in objects_to_remove_colors:
+            object.image = remove_color(object.image.copy(), TARGET_COLOR, (160, 160, 160))
+
 
     player.update()
     #Draw background
