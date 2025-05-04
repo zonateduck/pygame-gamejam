@@ -34,6 +34,10 @@ from Objects.TestObject1 import TestObject1
 from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
 from Objects.AppleObject import AppleObject
+from Objects.CatObject import CatObject
+from Objects.TreeFruitObject import TreeFruitObject
+from Objects.BirdObject import BirdObject
+from Objects.Bird2Object import Bird2Object
 
 from colorGrading import *
 
@@ -74,7 +78,7 @@ BLUE = (0, 0, 255)
 
 # Game variables
 x, y = 100, 100
-speed = 10
+speed = 8
 size = 50
 
 dialogue_active = False
@@ -85,13 +89,25 @@ map = Map(screen)
 
 obj_range = 15   #How big a range the interaction-area has
 
-grandma = Grandma("GrandmaTest", 900, 700)
+#grandma = Grandma("GrandmaTest", 900, 700)
+
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
     "testobject01" : TestObject1("testobject01", 200, 300),
-    "tree01" : TreeObject("Tree01", 200, 20),
     "apple01" : AppleObject("Apple01", 300, 40),
-    "grandma" : grandma
+    "grandma" : Grandma("grandma", 200, 200),
+    "cat" : CatObject("cat", 1000, 100),
+    "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
+    "bird01" : BirdObject("bird01", 300, 100),
+    "bird02" : BirdObject("bird01", 20, 400),
+    "twobirds01" : Bird2Object("twobirds01", 930, 300),
+    "tree01" : TreeObject("tree01", 200, 20),
+    "tree02" : TreeObject("tree02", 800, 100),
+    "tree03" : TreeObject("tree03", 200, 200),
+    "tree04" : TreeObject("tree04", 700, 100),
+    "tree05" : TreeObject("tree05", 400, 600),
+    "tree06" : TreeObject("tree06", 100, 300),
+    "tree07" : TreeObject("tree07", 900, 400),
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -127,6 +143,7 @@ area_f5 = AreaF5()
 
 
 current_state = test_start_screen
+default_area = area_c3 #Should be c3 in the end :)
 
 
 from scene1 import Scene1
@@ -189,8 +206,8 @@ def find_area(areaID):
         case "area_f5" : 
             new_state = area_f5
         case _: #If areaID did not match
-            print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
-            new_state = current_state
+            #print("WARNING: Area not found. Create collision in the .get_borders method, or attatch correct area")
+            new_state = default_area
     return new_state
 
 #Finds correct area to move to :)
@@ -260,7 +277,7 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print("pressed space")
-                    change_gamestate(area_a1)
+                    change_gamestate(default_area)
 
     current_state.run(screen)
         
@@ -286,7 +303,7 @@ while running:
 
     screen.blit(player.image, player.rect)
     player.update()
-    screen.blit(grandma.image, grandma.rect)
+    #screen.blit(grandma.image, grandma.rect)
 
     #   DRAW WORLD OBJECTS 
     #Draw world objects

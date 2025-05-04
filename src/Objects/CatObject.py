@@ -1,14 +1,14 @@
 import pygame
 
-from assets import TREESPRITE
+from assets import GARFIELDSPRITE
 
-SPRITE = TREESPRITE
-class TreeObject():
+SPRITE = GARFIELDSPRITE
+class CatObject():
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
         self.COLOR = (255, 255, 0)
-        self.size = 240
+        self.size = 130
         self.x = x
         self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)

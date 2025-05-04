@@ -1,7 +1,7 @@
 import pygame
 
-from assets import BACKGROUND_03
-BACKGROUND = BACKGROUND_03
+from assets import BACKGROUND_L2
+BACKGROUND = BACKGROUND_L2
 
 class AreaF5:
     def __init__(self):
