@@ -4,7 +4,10 @@ import pygame
 # Not used for the moment
 show_prompt = False # Flag to decide whether to draw the prompt
 
-def draw_interaction_prompt(screen, text="Press SPACE to interact"):
+def draw_interaction_prompt(screen, text):
+    if text == "":
+        text = "Press SPACE to interact"
+
     font = pygame.font.SysFont(None, 50)
     color = (255, 255, 255)
     bg_color = (0,0,0)

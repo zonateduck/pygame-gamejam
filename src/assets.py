@@ -8,8 +8,9 @@ BACKGROUND = asset_path
 
 # Objects
 
-path = ".." #or use pygame-gamejam
+path = "pygame-gamejam" #or use pygame-gamejam
 
+KETTEL = path + "/assets/kettle.png"
 MAP =  path + "/assets/map_2.png"
 MAPICON = path + "/assets/map_icon.png"
 BLOMSTSPRITE = path + "/assets/flower.jpeg"

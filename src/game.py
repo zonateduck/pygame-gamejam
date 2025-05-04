@@ -58,6 +58,7 @@ from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
 from Objects.HouseObject import HouseObject
+from Objects.TeaObject import TeaObject
 
 from colorGrading import *
 
@@ -119,7 +120,7 @@ map = Map(screen)
 obj_range = 15   #How big a range the interaction-area has
 
 #grandma = Grandma("GrandmaTest", 900, 700)
-
+teaVariable = TeaObject("tea", 300, 200)
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
     "apple01" : AppleObject("Apple01", 300, 40),
@@ -138,6 +139,7 @@ objects = {
     "tree05" : TreeObject("tree05", 200, 400),
     "tree06" : TreeObject("tree06", 800, 300),
     "tree07" : TreeObject("tree07", 900, 300),
+    "tea" : teaVariable
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -207,6 +209,7 @@ from scene8 import Scene8
 from scene9 import Scene9
 
 test_scene = Scene1(screen)
+
 
 
 #This makes sure the game is not in two states at the same time :)
@@ -466,10 +469,12 @@ while running:
             #print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
             if obj.ID == "cat":
-                draw_cat_interaction
+                # draw_interaction_prompt(screen, "MEOW")
+                pass
             if obj.ID == "tutor":
-                draw_tutor_interaction
-            draw_interaction_prompt(screen)
+                # draw_tutor_interaction(screen)
+                pass
+            draw_interaction_prompt(screen, "")
             # Code to handle interaction 
             if keys[pygame.K_SPACE] and not space_pressed_last_frame:
                 # Interaction depending on ID
@@ -477,8 +482,12 @@ while running:
                     obj.interact()
                     Sound.GrannyYap()
                     dialogue_active = True
+                    teaVariable.hasTalked = True
                     break
-
+                if obj.ID == "tea" and teaVariable.hasTalked == True:
+                    obj.interact()
+                    world_objects.remove(obj)
+                    test_scene = Scene9(screen)
                 if obj.ID == "apple01":
                     # pickup
                     pass
