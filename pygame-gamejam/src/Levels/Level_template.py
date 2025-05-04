@@ -1,7 +1,7 @@
 import pygame
 
 class TestScreen1:
-    def __init__(self):
+    def __init__(self, x, y):
         self.areaID = "template01"
         self.objects = ["testobject01"] #Which objects exist in this area?
         self.RED = (255, 60, 60)

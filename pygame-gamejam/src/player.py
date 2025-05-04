@@ -1,6 +1,11 @@
-import pygame, sys, playerAnimation, math
+import pygame, sys, playerAnimation
 
-#TODO: remove
+from assets import PLAYERSPRITE_UP
+from assets import PLAYERSPRITE_LEFT
+from assets import PLAYERSPRITE_RIGHT
+from assets import PLAYERSPRITE_DOWN
+from assets import PLAYERSPRITE_DOWNRIGHT
+from assets import PLAYERSPRITE_DOWNLEFT
 
 
 class Player(pygame.sprite.Sprite):
@@ -10,11 +15,10 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = screen_height
         self.SCREEN_WIDTH = screen_width
         self.PLAYER_SPEED = speed
-
+        self.size = (150, 150)
         #self.game = game
         
-        self.playersprite = "./assets/garfield.png"
-
+        self.playersprite = PLAYERSPRITE_DOWN
 
         #self.groups = self.game.all_sprites
         #pygame.sprite.Sprite.__init__(self, self.groups)
@@ -37,7 +41,8 @@ class Player(pygame.sprite.Sprite):
         #Cuts out the sprite from the first position of the spritesheet
         #self.image = self.game.player_sprite.get_sprite(0,0, self.width, self.height)
         #Placeholder garfield:
-        self.image = pygame.image.load("./assets/garfield.png")
+        self.image = pygame.image.load(self.playersprite)
+        self.image = pygame.transform.scale(self.image, self.size)
 
 
         #Sets hitbox to a rectangle x,y
@@ -46,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         #Player_animation(self)
-
+    
     #Checks for collision
     def can_move_to(self, dx, dy, collidables):
         future_pos_rect = self.rect.move(dx, dy)  #Creates a rectangle and sees if it collides with anything in the future position
@@ -92,12 +97,29 @@ class Player(pygame.sprite.Sprite):
         #self.move()
         #self.animate()
 
+        if self.facing == "right":
+            print("moving right")
+            self.playersprite = PLAYERSPRITE_RIGHT
+        if self.facing == "left":
+            self.playersprite = PLAYERSPRITE_LEFT
+        if self.facing == "down":
+            self.playersprite = PLAYERSPRITE_DOWN
+        if self.facing == "up":
+            self.playersprite = PLAYERSPRITE_UP  
+        if self.facing == "up_right":
+            self.playersprite = PLAYERSPRITE_UP
+        if self.facing == "up_left":
+            self.playersprite = PLAYERSPRITE_UP
+        if self.facing == "down_left":
+            self.playersprite = PLAYERSPRITE_DOWNLEFT
+        if self.facing == "down_right":
+            self.playersprite = PLAYERSPRITE_DOWNRIGHT  
+        
+        
         self.rect.x = self.x
         self.rect.y = self.y
 
         #self.x_change = 0
         #self.y_change = 0
-
-    
-    def animate(self):
-        Player_animation_animate(self)
+        self.image = pygame.image.load(self.playersprite)
+        self.image = pygame.transform.scale(self.image, self.size)
