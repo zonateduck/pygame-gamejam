@@ -1,10 +1,5 @@
-
 import pygame
-
 # This class controls the color grading
-
-
-
 
 # This function takes an image(Surface), and returns a greyscaled image
 def convert_to_black_and_white(image):
