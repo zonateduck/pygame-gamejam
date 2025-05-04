@@ -1,9 +1,9 @@
 import pygame
 
-from assets import GARFIELDSPRITE
+from assets import TUTORSPRITE
 
-SPRITE = GARFIELDSPRITE
-class CatObject(pygame.sprite.Sprite):
+SPRITE = TUTORSPRITE
+class TutorObject(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"

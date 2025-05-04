@@ -53,6 +53,7 @@ from Objects.TreeObject import TreeObject
 from Objects.GrandmaObject import Grandma
 from Objects.AppleObject import AppleObject
 from Objects.CatObject import CatObject
+from Objects.ButterflyObject import ButterflyObject
 from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
@@ -65,7 +66,7 @@ from map import Map
 
 # Dialogue handles
 from interactionsystem import draw_interaction_prompt
-
+from creaturesinteraction import draw_cat_interaction, draw_tutor_interaction
 
 
 # Initialize pygame
@@ -125,6 +126,7 @@ objects = {
     "house" : HouseObject("house", 800, 150),
     "grandma" : Grandma("grandma", 810, 330),
     "cat" : CatObject("cat", 1000, 100),
+    "butterfly" : ButterflyObject("butterfly", 800, 150), 
     "treefruit_b6" : TreeFruitObject("treefruit_b6", 600, 20),
     "bird01" : BirdObject("bird01", 300, 100),
     "bird02" : BirdObject("bird01", 20, 400),
@@ -463,6 +465,10 @@ while running:
         if fake_player_interaction_rect.colliderect(obj.interaction_rect) and obj.canInteract == True:
             #print("Can interact!")
             #Show text: "Space to talk" (some sort of UI element)
+            if obj.ID == "cat":
+                draw_cat_interaction
+            if obj.ID == "tutor":
+                draw_tutor_interaction
             draw_interaction_prompt(screen)
             # Code to handle interaction 
             if keys[pygame.K_SPACE] and not space_pressed_last_frame:

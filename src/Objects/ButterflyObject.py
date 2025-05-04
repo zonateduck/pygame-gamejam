@@ -1,14 +1,14 @@
 import pygame
 
-from assets import GARFIELDSPRITE
+from assets import BUTTERFLYSPRITE
 
-SPRITE = GARFIELDSPRITE
-class CatObject(pygame.sprite.Sprite):
+SPRITE = BUTTERFLYSPRITE
+class ButterflyObject(pygame.sprite.Sprite):
     def __init__(self, ID, x, y):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
         self.COLOR = (255, 255, 0)
-        self.size = 130
+        self.size = 220
         self.x = x
         self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)
@@ -28,7 +28,7 @@ class CatObject(pygame.sprite.Sprite):
 
 
         # Handles interaction
-        self.canInteract = True
+        self.canInteract = False
     
     def canInteract(self):
         return self.canInteract
