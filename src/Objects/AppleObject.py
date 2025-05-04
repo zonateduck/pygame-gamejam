@@ -7,7 +7,7 @@ class AppleObject(pygame.sprite.Sprite):
         super().__init__()
         self.ID = ID #String, eks. "sol01"
         self.COLOR = (255, 255, 0)
-        self.size = 30
+        self.size = 100
         self.x = x
         self.y = y
         self.collision_rect = pygame.Rect(self.x, self.y, self.size, self.size)

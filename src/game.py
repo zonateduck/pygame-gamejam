@@ -120,7 +120,7 @@ obj_range = 15   #How big a range the interaction-area has
 
 objects = {
     # "objectID" : Objekt("mittobjekt1", x, y)
-    "apple01" : AppleObject("Apple01", 300, 40),
+    "apple01" : AppleObject("apple01", 300, 250),
     "house" : HouseObject("house", 800, 150),
     "grandma" : Grandma("grandma", 810, 330),
     "cat" : CatObject("cat", 1000, 100),
