@@ -11,7 +11,7 @@ IRISPORTRAIT = IRIS  # Replace with the actual path
 BACKGROUND1 = BACKGROUND
 
 # Screen settings
-class Scene1:
+class Scene8:
     def __init__(self, screen):
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = screen.get_size()
         self.FONT = pygame.font.SysFont("lucida console", 24)
@@ -21,13 +21,12 @@ class Scene1:
         self.finished = True
 
         # Dialogue content
+        # Dialogue content and who is speaking (left or right)
         self.dialogue = [
-            "Iris, my dear... Can you please bring me a cup of tea?",
-            "Of course, Granny!"
-        ]
+    "Let's spill whatever she's cooking, that could help us!"
+]
 
         self.speakers = [
-    "Granny",
     "Iris"
 ]
 

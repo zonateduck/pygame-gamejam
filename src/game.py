@@ -93,7 +93,16 @@ current_state = test_start_screen
 
 
 from scene1 import Scene1
-test_scene = Scene1(screen)
+from scene2 import Scene2
+from scene3 import Scene3
+from scene4 import Scene4
+from scene5 import Scene5
+from scene6 import Scene6
+from scene7 import Scene7
+from scene8 import Scene8
+from scene9 import Scene9
+
+test_scene = Scene9(screen)
 
 
 #This makes sure the game is not in two states at the same time :)
