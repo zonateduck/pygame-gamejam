@@ -19,6 +19,7 @@ from Objects.GrandmaObject import Grandma
 from colorGrading import *
 
 from player import Player
+from map import Map
 
 # Dialogue handles
 from interactionsystem import draw_interaction_prompt
@@ -30,7 +31,7 @@ pygame.init()
 
 
 # Set up the window
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 GAME_BACKGROUND = BACKGROUND
@@ -58,6 +59,7 @@ speed = 5
 size = 50
 
 player = Player(screen, x, y, speed)
+map = Map(screen)
 
 obj_range = 15   #How big a range the interaction-area has
 
@@ -137,6 +139,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_m:
+                map.toggle_map()
  
 
     TARGET_COLOR = 		(204,0,0)
@@ -234,6 +239,8 @@ while running:
     
     
     #Draw the UI here
+    
+    map.run(screen, 600, 200)
 
     # Update display
     pygame.display.flip()
