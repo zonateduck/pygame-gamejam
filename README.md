@@ -2,7 +2,7 @@
 >
 > Code skeleton or precode for pygame
 
-# Name of our game
+# The Colors of Grandma's Forest
 
 Group members:
 
@@ -14,3 +14,4 @@ Group members:
 - Mila Toneff
 
 ## Description of the game
+
