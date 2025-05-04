@@ -8,7 +8,7 @@ BACKGROUND = asset_path
 
 # Objects
 
-path = "pygame-gamejam" #or use pygame-gamejam
+path = ".." #or use pygame-gamejam
 
 MAP =  path + "/assets/map_2.png"
 MAPICON = path + "/assets/map_icon.png"
@@ -25,12 +25,13 @@ PLAYERSPRITE_DOWNLEFT = path  + "/assets/iris down left.png"
 
 TREESPRITE = path + "/assets/tree.png"
 FRUITTREESPRITE = path + "/assets/tree with fruit.png"
-APPLESPRITE = path + "/assets/apple.jpg"
+APPLESPRITE = path + "/assets/apple.png"
 GARFIELDSPRITE = path + "/assets/garfield.png"
+TUTORSPRITE = path + "/assets/tu-tor.png"
 BIRDSPRITE = path + "/assets/bird.png"
 TWOBIRDSPRITE = path + "/assets/two birds.png"
 
-APPLESPRITE = path + "/assets/apple.jpg"
+APPLESPRITE = path + "/assets/apple.png"
 
 BACKGROUND_02 = path + "/assets/background2.png"
 BACKGROUND_03 = path + "/assets/background3.png"
@@ -43,7 +44,14 @@ BACKGROUND_B2 = path + "/assets/background_basic2.png"
 BACKGROUND_B3 = path + "/assets/background_basic3.png"
 BACKGROUND_05 = path + "/assets/background5.png"
 
+LAKESPRITE01 = path + "/assets/lake_1_big_part.png"
+LAKESPRITE02 = path + "/assets/lake_1_small_area.png"
+LAKESPRITE03 = path + "/assets/lake_2_big_area.png"
+LAKESPRITE04 = path + "/assets/lake_2_small_area.png"
 
-HOUSESPRITE = path + "/assets/houseplaceholder.png"
+
+
+
+HOUSESPRITE = path + "/assets/house.png"
 GRANDMA = path + "/assets/grandma portrait.png"
 IRIS = path + "/assets/iris portrait.png"

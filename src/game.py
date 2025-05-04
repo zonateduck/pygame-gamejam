@@ -57,6 +57,11 @@ from Objects.TreeFruitObject import TreeFruitObject
 from Objects.BirdObject import BirdObject
 from Objects.Bird2Object import Bird2Object
 from Objects.HouseObject import HouseObject
+from Objects.LakeObject1 import LakeObject1
+from Objects.LakeObject2 import LakeObject2
+from Objects.LakeObject3 import LakeObject3
+from Objects.LakeObject4 import LakeObject4
+from Objects.TutorObject import TutorObject
 
 from colorGrading import *
 
@@ -130,6 +135,11 @@ objects = {
     "tree05" : TreeObject("tree05", 200, 400),
     "tree06" : TreeObject("tree06", 100, 300),
     "tree07" : TreeObject("tree07", 900, 300),
+    "lake01" : LakeObject1("lake01", 630, 290),
+    "lake02" : LakeObject2("lake02", 1100, 220),
+    "lake03" : LakeObject3("lake03", 0, 370),
+    "lake04" : LakeObject4("lake04", 0, 220),
+    "tutor" : TutorObject("tutor", 600, 300)
 }
 
 #SUGGESTION: Keep a list of objects in the world for the sake of interaction. Update when states change
@@ -146,6 +156,23 @@ transition_threshold = 5    #How many pixels off-screen before transition
 test_start_screen = StartScreen()
 test_screen1 = TestScreen1()
 test_screen2 = TestScreen2()
+
+area_a1 = AreaA1()
+area_a6 = AreaA6()
+area_b1 = AreaB1()
+area_b2 = AreaB2()
+area_b3 = AreaB3()
+area_b5 = AreaB5()
+area_b6 = AreaB6()
+area_c2 = AreaC2()
+area_c3 = AreaC3()
+area_c4 = AreaC4()
+area_c5 = AreaC5()
+area_d3 = AreaD3()
+area_d4 = AreaD4()
+area_e4 = AreaE4()
+area_f4 = AreaF4()
+area_f5 = AreaF5()
 
 
 
@@ -306,7 +333,7 @@ while running:
                 map.toggle_map()
  
 
-    TARGET_COLOR = 	(241,100,31)
+    TARGET_COLOR = 		(204,0,0)
     REPLACEMENT_COLOR = (23, 23 ,23)
     # Get key presses
 #Verdi å gange med for å få diagonal hastighet til å være lik straight:
@@ -383,13 +410,8 @@ while running:
             player.facing = "down"
             if player.can_move_to(dx, dy, collidables):
                 player.y += dy 
-                
-    if keys[pygame.K_1]: # THIS HANDLES THE REMOVAL OF COLORS FROM EVERYTHING
-        for floor in floors:
-            floor.background = remove_color(floor.background.copy(), TARGET_COLOR, (160, 160, 160))
-        for object in objects_to_remove_colors:
-            object.image = remove_color(object.image.copy(), TARGET_COLOR, (160, 160, 160))
-
+    if keys[pygame.K_1]: #DEBUG BUTTON
+        background = remove_color(background.copy(), TARGET_COLOR, (160, 160, 160))
 
     player.update()
     #Draw background
@@ -446,7 +468,7 @@ while running:
             # Code to handle interaction 
             if keys[pygame.K_SPACE]:
                 # Interaction depending on ID
-                if obj.ID == "grandma":
+                if obj.ID == "GrandmaTest":
                     obj.interact()
                     dialogue_active = True
                 if obj.ID == "apple01":
